@@ -25,7 +25,7 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
@@ -34,5 +34,5 @@ spring:
     show-sql: true
     properties:
       hibernate.jdbc.lob.non_contextual_creation: true
-      hibernate.hbm2ddl.auto: update
+      hibernate.hbm2ddl.auto: create-drop
       hibernate.id.new_generator_mappings: true

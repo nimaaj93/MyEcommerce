@@ -11,5 +11,66 @@ public class CustomerAddress {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String cityFa;
+    private String cityEn;
+    private String addressFa;
+    private String addressEn;
+    private String postCode;
+    private boolean defaultSelected;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCityFa() {
+        return cityFa;
+    }
+
+    public void setCityFa(String cityFa) {
+        this.cityFa = cityFa;
+    }
+
+    public String getCityEn() {
+        return cityEn;
+    }
+
+    public void setCityEn(String cityEn) {
+        this.cityEn = cityEn;
+    }
+
+    public String getAddressFa() {
+        return addressFa;
+    }
+
+    public void setAddressFa(String addressFa) {
+        this.addressFa = addressFa;
+    }
+
+    public String getAddressEn() {
+        return addressEn;
+    }
+
+    public void setAddressEn(String addressEn) {
+        this.addressEn = addressEn;
+    }
+
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+
+    public boolean isDefaultSelected() {
+        return defaultSelected;
+    }
+
+    public void setDefaultSelected(boolean defaultSelected) {
+        this.defaultSelected = defaultSelected;
+    }
 }
