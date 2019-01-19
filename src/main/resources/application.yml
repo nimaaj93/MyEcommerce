@@ -1,0 +1,38 @@
+server:
+  port: 6666
+
+spring:
+  application:
+    name: crm
+
+  profiles:
+    active: dev
+  mvc:
+    favicon:
+      enabled: false
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: false
+
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/ecommerce
+    username: ecommerce
+    password: 123456
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    show-sql: true
+    properties:
+      hibernate.jdbc.lob.non_contextual_creation: true
+      hibernate.hbm2ddl.auto: update
+      hibernate.id.new_generator_mappings: true
