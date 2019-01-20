@@ -6,4 +6,10 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("VIDEO")
 public class Video extends Media {
+
+    private Long height;
+    private Long width;
+    private Long lengthMs;
+
+
 }

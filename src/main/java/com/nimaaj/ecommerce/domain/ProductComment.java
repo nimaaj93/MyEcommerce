@@ -16,7 +16,7 @@ public class ProductComment extends BaseEntity {
     private User user;
     @ManyToOne
     private Product product;
-    @OneToOne
+    @ManyToOne
     private ProductComment parent;
     private boolean edited;
 

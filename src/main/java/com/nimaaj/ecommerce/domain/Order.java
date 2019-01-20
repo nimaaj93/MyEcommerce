@@ -24,6 +24,8 @@ public class Order extends BaseEntity {
     private List<OrderPayment> payments;
     @OneToMany(mappedBy = "order")
     private List<OrderShipping> shippings;
+    @OneToOne(mappedBy = "order")
+    private Invoice invoice;
 
     public Long getId() {
         return id;
@@ -73,4 +75,11 @@ public class Order extends BaseEntity {
         this.shippings = shippings;
     }
 
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
 }

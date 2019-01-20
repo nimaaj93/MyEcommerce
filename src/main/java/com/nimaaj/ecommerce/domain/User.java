@@ -37,4 +37,12 @@ public class User {
     public void setAuthentication(Authentication authentication) {
         this.authentication = authentication;
     }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 }

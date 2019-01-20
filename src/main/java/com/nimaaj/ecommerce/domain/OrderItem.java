@@ -25,6 +25,7 @@ public class OrderItem extends BaseEntity {
     private Integer currentStock;
     @OneToOne
     private Customer customer;
+    @OneToMany
     private List<Sale> sales;
     @ManyToOne
     private Order order;

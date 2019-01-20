@@ -1,6 +1,7 @@
 package com.nimaaj.ecommerce.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "manufacturer")
@@ -13,5 +14,8 @@ public class Manufacturer {
     private Long id;
     private String titleEn;
     private String titleFa;
+
+    @OneToMany(mappedBy = "manufacturer")
+    private List<Product> products;
 
 }

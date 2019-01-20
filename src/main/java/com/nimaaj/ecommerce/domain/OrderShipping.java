@@ -1,5 +1,7 @@
 package com.nimaaj.ecommerce.domain;
 
+import com.nimaaj.ecommerce.enumaration.ShippingStatus;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -20,10 +22,8 @@ public class OrderShipping extends BaseEntity {
     private Date sendDateTime;
     @Temporal(TemporalType.TIMESTAMP)
     private Date deliverDateTime;
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
+    @Enumerated(EnumType.STRING)
+    private ShippingStatus status;
 
     public Long getId() {
         return id;
@@ -63,5 +63,13 @@ public class OrderShipping extends BaseEntity {
 
     public void setDeliverDateTime(Date deliverDateTime) {
         this.deliverDateTime = deliverDateTime;
+    }
+
+    public ShippingStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ShippingStatus status) {
+        this.status = status;
     }
 }

@@ -21,7 +21,7 @@ public class Media extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private MediaStatus status;
     private Long size;
-
+    private String format;
 
     public Long getId() {
         return id;
@@ -69,5 +69,13 @@ public class Media extends BaseEntity {
 
     public void setSize(Long size) {
         this.size = size;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
     }
 }

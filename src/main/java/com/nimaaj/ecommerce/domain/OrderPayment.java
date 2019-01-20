@@ -18,7 +18,9 @@ public class OrderPayment extends BaseEntity {
     private Long amount;
     @ManyToOne
     private Order order;
+    @Enumerated(EnumType.STRING)
     private PaymentStatus status;
+    @Enumerated(EnumType.STRING)
     private PaymentMethod method;
     @Temporal(TemporalType.TIMESTAMP)
     private Date paymentDateTime;
