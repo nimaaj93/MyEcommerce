@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "customer_address")
-public class CustomerAddress {
+public class CustomerAddress extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,6 +17,9 @@ public class CustomerAddress {
     private String addressEn;
     private String postCode;
     private boolean defaultSelected;
+
+    @ManyToOne
+    private Customer customer;
 
     public Long getId() {
         return id;
@@ -72,5 +75,13 @@ public class CustomerAddress {
 
     public void setDefaultSelected(boolean defaultSelected) {
         this.defaultSelected = defaultSelected;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

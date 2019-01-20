@@ -14,6 +14,9 @@ public class Authentication extends BaseEntity {
     private String password;
     private String salt;
 
+    @OneToOne(mappedBy = "authentication")
+    private User user;
+
     public Long getId() {
         return id;
     }
@@ -44,5 +47,13 @@ public class Authentication extends BaseEntity {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

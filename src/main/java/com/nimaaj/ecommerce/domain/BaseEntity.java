@@ -1,5 +1,11 @@
 package com.nimaaj.ecommerce.domain;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Date;
@@ -7,9 +13,15 @@ import java.util.Date;
 @MappedSuperclass
 public class BaseEntity implements Serializable {
 
+    @CreatedDate
+    @Column(updatable = false)
     private Date createDateTime;
+    @CreatedBy
+    @Column(updatable = false)
     private String createUser;
+    @LastModifiedDate
     private Date lastModifiedDateTime;
+    @LastModifiedBy
     private String updateUser;
 
     public Date getCreateDateTime() {
