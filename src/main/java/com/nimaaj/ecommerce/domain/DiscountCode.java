@@ -18,6 +18,7 @@ public class DiscountCode extends BaseEntity {
     private String description;
     @Enumerated(EnumType.STRING)
     private DiscountCodeType discountCodeType;
+    private String discountRefVal;
     private Long maxAmount;
     @Temporal(TemporalType.TIMESTAMP)
     private Date expireDateTime;
@@ -60,6 +61,14 @@ public class DiscountCode extends BaseEntity {
 
     public void setDiscountCodeType(DiscountCodeType discountCodeType) {
         this.discountCodeType = discountCodeType;
+    }
+
+    public String getDiscountRefVal() {
+        return discountRefVal;
+    }
+
+    public void setDiscountRefVal(String discountRefVal) {
+        this.discountRefVal = discountRefVal;
     }
 
     public Long getMaxAmount() {

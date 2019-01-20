@@ -11,7 +11,7 @@ public class Application extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
     private String titleFa;
     private String titleEn;

@@ -10,7 +10,9 @@ public class Product extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    private String titleEn;
+    private String titleFa;
+
 
     public Long getId() {
         return id;
@@ -20,11 +22,5 @@ public class Product extends BaseEntity {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
-    }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 }

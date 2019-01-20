@@ -13,10 +13,11 @@ public class Customer extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nameFa;
     private String nameEn;
+    @Enumerated(EnumType.STRING)
     private CustomerType customerType;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
