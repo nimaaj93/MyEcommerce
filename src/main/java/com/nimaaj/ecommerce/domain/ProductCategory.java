@@ -19,6 +19,8 @@ public class ProductCategory {
     private ProductCategory parent;
     @OneToMany(mappedBy = "parent")
     private List<ProductCategory> children;
+    @OneToMany(mappedBy = "productCategory")
+    private List<ProductCategoryAttr> productCategoryAttrs;
 
     public Long getId() {
         return id;
@@ -74,5 +76,13 @@ public class ProductCategory {
 
     public void setOrder(Integer order) {
         this.order = order;
+    }
+
+    public List<ProductCategoryAttr> getProductCategoryAttrs() {
+        return productCategoryAttrs;
+    }
+
+    public void setProductCategoryAttrs(List<ProductCategoryAttr> productCategoryAttrs) {
+        this.productCategoryAttrs = productCategoryAttrs;
     }
 }
