@@ -23,6 +23,7 @@ public class OrderItem extends BaseEntity {
     private Product product;
     private Integer beforeStock;
     private Integer currentStock;
+    private Integer orderCount;
     @OneToOne
     private Customer customer;
     @OneToMany
@@ -93,5 +94,13 @@ public class OrderItem extends BaseEntity {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public Integer getOrderCount() {
+        return orderCount;
+    }
+
+    public void setOrderCount(Integer orderCount) {
+        this.orderCount = orderCount;
     }
 }

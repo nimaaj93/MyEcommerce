@@ -5,6 +5,7 @@ import com.nimaaj.ecommerce.enumaration.UserType;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "app_user")
 public class User extends BaseEntity {
@@ -24,6 +25,8 @@ public class User extends BaseEntity {
     private Authentication authentication;
     @ManyToOne
     private Customer customer;
+    @OneToMany(mappedBy = "user")
+    private List<UserBag> userBagList;
 
     public Long getId() {
         return id;
@@ -79,5 +82,13 @@ public class User extends BaseEntity {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public List<UserBag> getUserBagList() {
+        return userBagList;
+    }
+
+    public void setUserBagList(List<UserBag> userBagList) {
+        this.userBagList = userBagList;
     }
 }

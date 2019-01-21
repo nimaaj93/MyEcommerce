@@ -28,6 +28,8 @@ public class Product extends BaseEntity {
     private List<ProductMediaRel> productMediaRels;
     @OneToOne
     private ProductDetail detail;
+    @OneToMany(mappedBy = "product")
+    private List<UserBag> containingBags;
 
     public Long getId() {
         return id;
@@ -115,5 +117,13 @@ public class Product extends BaseEntity {
 
     public void setDetail(ProductDetail detail) {
         this.detail = detail;
+    }
+
+    public List<UserBag> getContainingBags() {
+        return containingBags;
+    }
+
+    public void setContainingBags(List<UserBag> containingBags) {
+        this.containingBags = containingBags;
     }
 }
