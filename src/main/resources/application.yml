@@ -3,10 +3,7 @@ server:
 
 spring:
   application:
-    name: crm
-
-  profiles:
-    active: dev
+    name: ecommerce
   mvc:
     favicon:
       enabled: false
