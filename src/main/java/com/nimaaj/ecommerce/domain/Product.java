@@ -108,4 +108,12 @@ public class Product extends BaseEntity {
     public void setProductMediaRels(List<ProductMediaRel> productMediaRels) {
         this.productMediaRels = productMediaRels;
     }
+
+    public ProductDetail getDetail() {
+        return detail;
+    }
+
+    public void setDetail(ProductDetail detail) {
+        this.detail = detail;
+    }
 }

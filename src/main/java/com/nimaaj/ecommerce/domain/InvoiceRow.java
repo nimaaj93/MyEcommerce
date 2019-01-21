@@ -17,6 +17,8 @@ public class InvoiceRow extends BaseEntity {
     private Long amount;
     @ManyToOne
     private OrderItem orderItem;
+    @ManyToOne
+    private Invoice invoice;
 
     public Long getId() {
         return id;
@@ -56,5 +58,13 @@ public class InvoiceRow extends BaseEntity {
 
     public void setOrderItem(OrderItem orderItem) {
         this.orderItem = orderItem;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 }

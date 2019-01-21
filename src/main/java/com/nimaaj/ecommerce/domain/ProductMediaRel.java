@@ -12,7 +12,7 @@ public class ProductMediaRel extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer order;
+    private Integer orderVal;
     private boolean main;
 
     @ManyToOne
@@ -28,12 +28,12 @@ public class ProductMediaRel extends BaseEntity {
         this.id = id;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getOrderVal() {
+        return orderVal;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setOrderVal(Integer orderVal) {
+        this.orderVal = orderVal;
     }
 
     public boolean isMain() {

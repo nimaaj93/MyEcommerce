@@ -3,6 +3,7 @@ package com.nimaaj.ecommerce.domain;
 import com.nimaaj.ecommerce.enumaration.MediaStatus;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "media")
@@ -22,6 +23,9 @@ public class Media extends BaseEntity {
     private MediaStatus status;
     private Long size;
     private String format;
+    @OneToMany(mappedBy = "media")
+    private List<ProductMediaRel> productMediaRels;
+
 
     public Long getId() {
         return id;
@@ -77,5 +81,13 @@ public class Media extends BaseEntity {
 
     public void setFormat(String format) {
         this.format = format;
+    }
+
+    public List<ProductMediaRel> getProductMediaRels() {
+        return productMediaRels;
+    }
+
+    public void setProductMediaRels(List<ProductMediaRel> productMediaRels) {
+        this.productMediaRels = productMediaRels;
     }
 }

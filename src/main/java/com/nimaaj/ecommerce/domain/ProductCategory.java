@@ -3,6 +3,8 @@ package com.nimaaj.ecommerce.domain;
 import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "product_category")
 public class ProductCategory {
 
     private static final long serialVersionUID = 1L;
@@ -13,7 +15,7 @@ public class ProductCategory {
     private String titleFa;
     private String titleEn;
     private String description;
-    private Integer order;
+    private Integer orderVal;
 
     @ManyToOne
     private ProductCategory parent;
@@ -70,12 +72,12 @@ public class ProductCategory {
         this.children = children;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getOrderVal() {
+        return orderVal;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setOrderVal(Integer orderVal) {
+        this.orderVal = orderVal;
     }
 
     public List<ProductCategoryAttr> getProductCategoryAttrs() {

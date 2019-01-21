@@ -1,6 +1,7 @@
 package com.nimaaj.ecommerce.domain;
 
 import com.nimaaj.ecommerce.enumaration.Gender;
+import com.nimaaj.ecommerce.enumaration.UserType;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,6 +16,8 @@ public class User extends BaseEntity {
     private String name;
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfBirth;
     @OneToOne
@@ -60,6 +63,14 @@ public class User extends BaseEntity {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 
     public Date getDateOfBirth() {

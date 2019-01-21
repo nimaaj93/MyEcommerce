@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "order_all")
 public class Order extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
