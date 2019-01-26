@@ -33,3 +33,10 @@ spring:
       hibernate.jdbc.lob.non_contextual_creation: true
       hibernate.hbm2ddl.auto: update
       hibernate.id.new_generator_mappings: true
+
+ecommerce:
+  security:
+    token-validity-in-seconds: 5000
+    token-validity-in-seconds-for-remember-me: 1000000
+    secret: dbsogjw334slnslns335ugshey425gffg35345dfdfg45
+    base64Secret: ZGJzb2dqdzMzNHNsbnNsbnMzMzV1Z3NoZXk0MjVnZmZnMzUzNDVkZmRmZzQ1

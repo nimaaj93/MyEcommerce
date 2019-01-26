@@ -6,6 +6,7 @@ import com.nimaaj.ecommerce.enumaration.UserType;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "app_user")
 public class User extends BaseEntity {
@@ -30,6 +31,9 @@ public class User extends BaseEntity {
     private Customer customer;
     @OneToMany(mappedBy = "user")
     private List<UserBag> userBagList;
+    @ManyToMany
+    private Set<Authority> authorities;
+    private boolean activated;
 
     public Long getId() {
         return id;
@@ -117,5 +121,21 @@ public class User extends BaseEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 }
