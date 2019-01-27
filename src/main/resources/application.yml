@@ -38,5 +38,5 @@ ecommerce:
   security:
     token-validity-in-seconds: 5000
     token-validity-in-seconds-for-remember-me: 1000000
-    secret: dbsogjw334slnslns335ugshey425gffg35345dfdfg45
-    base64Secret: ZGJzb2dqdzMzNHNsbnNsbnMzMzV1Z3NoZXk0MjVnZmZnMzUzNDVkZmRmZzQ1
+    secret: dbsogjw3Fre54434slnslns335ugshey425gffg353ADF34fsshe45dfhgheQWQffsaDFDSSF554SFDSFShkllrojerkvna348ydgjhr8ygfgkjwdfg45
+    base64Secret: ZGJzb2dqdzNGcmU1NDQzNHNsbnNsbnMzMzV1Z3NoZXk0MjVnZmZnMzUzQURGMzRmc3NoZTQ1ZGZoZ2hlUVdRZmZzYURGRFNTRjU1NFNGRFNGU2hrbGxyb2plcmt2bmEzNDh5ZGdqaHI4eWdmZ2tqd2RmZzQ1
