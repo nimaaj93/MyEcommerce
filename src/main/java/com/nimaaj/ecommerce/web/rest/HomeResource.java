@@ -13,12 +13,5 @@ import java.util.List;
 @RequestMapping("/api/v1/home")
 public class HomeResource {
 
-    @Autowired
-    private ProductRepository productRepository;
-
-    @GetMapping
-    public List<Product> hello() {
-        return productRepository.findAll();
-    }
 
 }

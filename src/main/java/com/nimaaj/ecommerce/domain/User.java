@@ -25,7 +25,7 @@ public class User extends BaseEntity {
     private UserType userType;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfBirth;
-    @OneToOne
+    @OneToOne(mappedBy = "user")
     private Authentication authentication;
     @ManyToOne
     private Customer customer;

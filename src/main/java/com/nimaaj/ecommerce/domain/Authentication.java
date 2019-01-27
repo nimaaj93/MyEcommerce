@@ -14,7 +14,7 @@ public class Authentication extends BaseEntity {
     private String password;
     private String salt;
 
-    @OneToOne(mappedBy = "authentication")
+    @OneToOne
     private User user;
 
     public Long getId() {

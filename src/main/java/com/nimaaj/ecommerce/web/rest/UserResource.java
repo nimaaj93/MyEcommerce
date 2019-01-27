@@ -3,6 +3,7 @@ package com.nimaaj.ecommerce.web.rest;
 import com.nimaaj.ecommerce.dto.ProfileDTO;
 import com.nimaaj.ecommerce.model.JWTToken;
 import com.nimaaj.ecommerce.model.input.AuthenticateModel;
+import com.nimaaj.ecommerce.model.input.UserRegistrationModel;
 import com.nimaaj.ecommerce.security.jwt.JWTFilter;
 import com.nimaaj.ecommerce.security.jwt.TokenProvider;
 import com.nimaaj.ecommerce.service.UserService;
@@ -45,6 +46,12 @@ public class UserResource {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
         return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<HttpStatus> register(@Valid @RequestBody UserRegistrationModel model) {
+        userService.register(model);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
 }
