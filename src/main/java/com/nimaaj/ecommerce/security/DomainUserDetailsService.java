@@ -42,7 +42,7 @@ public class DomainUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User with email " + login + " was not found in the database"));
         }
 
-        return userRepository.findOneWithAuthoritiesByAuthentication_Username(login)
+        return userRepository.findOneWithAuthoritiesByMobileNumber(login)
             .map(user -> createSpringSecurityUser(login, user))
             .orElseThrow(() -> new UsernameNotFoundException("User " + login + " was not found in the database"));
 
@@ -55,7 +55,7 @@ public class DomainUserDetailsService implements UserDetailsService {
         List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
             .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityVal()))
             .collect(Collectors.toList());
-        return new org.springframework.security.core.userdetails.User(user.getAuthentication().getUsername(),
+        return new org.springframework.security.core.userdetails.User(username,
             user.getAuthentication().getPassword(),
             grantedAuthorities);
     }
