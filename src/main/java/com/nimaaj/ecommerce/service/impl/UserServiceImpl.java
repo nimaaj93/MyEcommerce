@@ -66,12 +66,11 @@ public class UserServiceImpl implements UserService {
 
         Set<Authority> authorities = new HashSet<>();
 
-        Authority userAuthority = new Authority();
-        userAuthority.setAuthorityVal(UserRole.USER.name());
+        authorityRepository.findByAuthorityVal()
         authorities.add(userAuthority);
         user.setAuthorities(authorities);
 
         userRepository.save(user);
-        
+        authenticationRepository.save();
     }
 }
