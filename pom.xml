@@ -75,6 +75,12 @@
             <artifactId>problem-spring-web</artifactId>
             <version>0.24.0-RC.0</version>
         </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.11</version>
+        </dependency>
+
 
     </dependencies>
 

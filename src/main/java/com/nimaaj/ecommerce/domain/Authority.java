@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "app_user_authority")
-public class Authority implements Serializable {
+public class Authority extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

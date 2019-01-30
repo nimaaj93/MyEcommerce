@@ -21,6 +21,8 @@ public class EcommerceProperties {
         private Long tokenValidityInSecondsForRememberMe;
         private String secret;
         private String base64Secret;
+        private String passHashKey;
+        private Integer userSaltLength;
 
         public Long getTokenValidityInSeconds() {
             return tokenValidityInSeconds;
@@ -52,6 +54,22 @@ public class EcommerceProperties {
 
         public void setBase64Secret(String base64Secret) {
             this.base64Secret = base64Secret;
+        }
+
+        public String getPassHashKey() {
+            return passHashKey;
+        }
+
+        public void setPassHashKey(String passHashKey) {
+            this.passHashKey = passHashKey;
+        }
+
+        public Integer getUserSaltLength() {
+            return userSaltLength;
+        }
+
+        public void setUserSaltLength(Integer userSaltLength) {
+            this.userSaltLength = userSaltLength;
         }
     }
 
