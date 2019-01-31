@@ -7,18 +7,23 @@ import com.nimaaj.ecommerce.dto.ProfileDTO;
 import com.nimaaj.ecommerce.enumaration.UserRole;
 import com.nimaaj.ecommerce.enumaration.UserType;
 import com.nimaaj.ecommerce.exception.AuthorityNotFoundException;
+import com.nimaaj.ecommerce.exception.InvalidCurrentPassException;
 import com.nimaaj.ecommerce.exception.InvalidInputDataException;
 import com.nimaaj.ecommerce.exception.UserExistsException;
+import com.nimaaj.ecommerce.model.input.ResetPassModel;
 import com.nimaaj.ecommerce.model.input.UserRegistrationModel;
 import com.nimaaj.ecommerce.repository.AuthenticationRepository;
 import com.nimaaj.ecommerce.repository.AuthorityRepository;
 import com.nimaaj.ecommerce.repository.UserRepository;
+import com.nimaaj.ecommerce.security.SecurityUtils;
+import com.nimaaj.ecommerce.service.AuthenticationService;
 import com.nimaaj.ecommerce.service.UserService;
 import com.nimaaj.ecommerce.util.AuthenticationUtil;
 import com.nimaaj.ecommerce.util.properties.EcommerceProperties;
 import com.nimaaj.ecommerce.util.validation.IranPhoneNumberValidator;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +43,8 @@ public class UserServiceImpl implements UserService {
     private AuthorityRepository authorityRepository;
     @Autowired
     private EcommerceProperties ecommerceProperties;
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @Override
     public ProfileDTO getProfile() {
@@ -93,5 +100,21 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         authenticationRepository.save(authentication);
 
+    }
+
+    @Override
+    public void resetPass(ResetPassModel model) {
+
+        String currentHash = authenticationService.hashPassForCurrentUser(model.getCurrentPassword());
+        Authentication authentication = authenticationService.getCurrentAuthentication();
+
+        if (!authentication.getPassword().equals(currentHash)) {
+            throw new InvalidCurrentPassException();
+        }
+
+        String newHash = authenticationService.hashPassForCurrentUser(model.getNewPassword());
+        authentication.setPassword(newHash);
+
+        authenticationRepository.save(authentication);
     }
 }

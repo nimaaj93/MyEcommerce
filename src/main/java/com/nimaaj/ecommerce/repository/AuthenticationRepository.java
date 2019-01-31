@@ -6,4 +6,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AuthenticationRepository extends JpaRepository<Authentication, Long> {
+
+    Authentication findByUser_MobileNumber(String mobileNumber);
+
+    Authentication findByUser_Email(String email);
+
 }
