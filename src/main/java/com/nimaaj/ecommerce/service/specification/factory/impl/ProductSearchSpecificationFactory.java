@@ -60,8 +60,8 @@ public class ProductSearchSpecificationFactory
 
             if (!Empty.isBlank(filter.getSearchQuery())) {
                 Predicate textSearchCriteria = criteriaBuilder.or(
-                    criteriaBuilder.like(root.get("titleEn"), filter.getSearchQuery()),
-                    criteriaBuilder.like(root.get("titleFa"), filter.getSearchQuery())
+                    criteriaBuilder.like(root.get("titleEn"), "%" + filter.getSearchQuery() + "%"),
+                    criteriaBuilder.like(root.get("titleFa"), "%" + filter.getSearchQuery() + "%")
                 );
                 predicateList.add(textSearchCriteria);
             }
