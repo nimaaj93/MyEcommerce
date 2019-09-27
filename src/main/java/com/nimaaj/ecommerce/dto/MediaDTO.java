@@ -1,6 +1,7 @@
 package com.nimaaj.ecommerce.dto;
 
 import com.nimaaj.ecommerce.enumaration.MediaStatus;
+import com.nimaaj.ecommerce.enumaration.MediaType;
 
 /**
  * Created by K550 VX on 27.09.2019.
@@ -14,6 +15,7 @@ public class MediaDTO {
     private MediaStatus status;
     private Long size;
     private String format;
+    private MediaType mediaType;
 
     public Long getId() {
         return id;
@@ -69,5 +71,13 @@ public class MediaDTO {
 
     public void setFormat(String format) {
         this.format = format;
+    }
+
+    public MediaType getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(MediaType mediaType) {
+        this.mediaType = mediaType;
     }
 }
