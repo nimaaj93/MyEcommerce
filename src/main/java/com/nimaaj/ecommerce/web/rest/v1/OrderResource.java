@@ -1,4 +1,4 @@
-package com.nimaaj.ecommerce.web.rest;
+package com.nimaaj.ecommerce.web.rest.v1;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

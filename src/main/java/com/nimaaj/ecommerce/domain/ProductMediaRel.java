@@ -4,6 +4,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "product_media_rel")
+@NamedEntityGraph(name = "ProductMediaRel.full",
+        attributeNodes = {
+        @NamedAttributeNode("product"), @NamedAttributeNode("media")})
 public class ProductMediaRel extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package com.nimaaj.ecommerce.web.rest;
+package com.nimaaj.ecommerce.web.rest.v1;
 
 import com.nimaaj.ecommerce.dto.ProfileDTO;
 import com.nimaaj.ecommerce.model.JWTToken;

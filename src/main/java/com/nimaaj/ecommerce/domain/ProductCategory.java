@@ -1,11 +1,12 @@
 package com.nimaaj.ecommerce.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "product_category")
-public class ProductCategory {
+public class ProductCategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,11 +18,11 @@ public class ProductCategory {
     private String description;
     private Integer orderVal;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private ProductCategory parent;
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     private List<ProductCategory> children;
-    @OneToMany(mappedBy = "productCategory")
+    @OneToMany(mappedBy = "productCategory", fetch = FetchType.LAZY)
     private List<ProductCategoryAttr> productCategoryAttrs;
 
     public Long getId() {
