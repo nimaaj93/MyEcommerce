@@ -35,16 +35,23 @@ import java.util.Set;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
     private AuthenticationRepository authenticationRepository;
-    @Autowired
     private AuthorityRepository authorityRepository;
-    @Autowired
     private EcommerceProperties ecommerceProperties;
-    @Autowired
     private AuthenticationService authenticationService;
+
+    public UserServiceImpl(UserRepository userRepository,
+                           AuthenticationRepository authenticationRepository,
+                           AuthorityRepository authorityRepository,
+                           EcommerceProperties ecommerceProperties,
+                           AuthenticationService authenticationService) {
+        this.userRepository = userRepository;
+        this.authenticationRepository = authenticationRepository;
+        this.authorityRepository = authorityRepository;
+        this.ecommerceProperties = ecommerceProperties;
+        this.authenticationService = authenticationService;
+    }
 
     @Override
     public ProfileDTO getProfile() {

@@ -1,4 +1,4 @@
-package com.nimaaj.ecommerce.web.rest;
+package com.nimaaj.ecommerce.web.rest.v1;
 
 import com.nimaaj.ecommerce.domain.Product;
 import com.nimaaj.ecommerce.repository.ProductRepository;

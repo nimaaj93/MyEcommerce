@@ -12,7 +12,7 @@ public class ProductComment extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String comment;
-    @OneToOne
+    @ManyToOne
     private User user;
     @ManyToOne
     private Product product;
