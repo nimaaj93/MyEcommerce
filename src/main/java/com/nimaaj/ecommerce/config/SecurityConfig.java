@@ -70,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+        //TODO look for an alternative
         return NoOpPasswordEncoder.getInstance();
     }
 
@@ -90,10 +91,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling()
+//                .exceptionHandling()
 //                .authenticationEntryPoint(problemSupport)
 //                .accessDeniedHandler(problemSupport)
-                .and()
+//                .and()
                 .headers()
                 .frameOptions()
                 .disable()

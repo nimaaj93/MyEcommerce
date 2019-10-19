@@ -1,9 +1,8 @@
 package com.nimaaj.ecommerce.security.jwt;
 
+import com.nimaaj.ecommerce.security.CustomUserDetails;
 import com.nimaaj.ecommerce.util.properties.EcommerceProperties;
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,11 +11,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -27,33 +23,24 @@ public class TokenProvider {
 
     private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
 
-    private static final String AUTHORITIES_KEY = "auth";
-
-    private Key key;
+    public static final String AUTHORITIES_KEY = "auth";
+    public static final String USER_ID_KEY = "user_id";
 
     private long tokenValidityInMilliseconds;
 
     private long tokenValidityInMillisecondsForRememberMe;
 
     private final EcommerceProperties ecommerceProperties;
+    private final KeyProvider keyProvider;
 
-    public TokenProvider(EcommerceProperties ecommerceProperties) {
+    public TokenProvider(EcommerceProperties ecommerceProperties, KeyProvider keyProvider) {
         this.ecommerceProperties = ecommerceProperties;
+        this.keyProvider = keyProvider;
     }
 
     @PostConstruct
     public void init() {
-        byte[] keyBytes;
-        String secret = ecommerceProperties.getSecurity().getSecret();
-        if (!StringUtils.isEmpty(secret)) {
-            log.warn("Warning: the JWT key used is not Base64-encoded. " +
-                "We recommend using the `jhipster.security.authentication.jwt.base64-secret` key for optimum security.");
-            keyBytes = secret.getBytes(StandardCharsets.UTF_8);
-        } else {
-            log.debug("Using a Base64-encoded JWT secret key");
-            keyBytes = Decoders.BASE64.decode(ecommerceProperties.getSecurity().getBase64Secret());
-        }
-        this.key = Keys.hmacShaKeyFor(keyBytes);
+
         this.tokenValidityInMilliseconds =
             1000 * ecommerceProperties.getSecurity().getTokenValidityInSeconds();
         this.tokenValidityInMillisecondsForRememberMe =
@@ -64,6 +51,8 @@ public class TokenProvider {
         String authorities = authentication.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.joining(","));
+
+        CustomUserDetails userDetails = (CustomUserDetails)authentication.getPrincipal();
 
         long now = (new Date()).getTime();
         Date validity;
@@ -76,14 +65,15 @@ public class TokenProvider {
         return Jwts.builder()
             .setSubject(authentication.getName())
             .claim(AUTHORITIES_KEY, authorities)
-            .signWith(key, SignatureAlgorithm.HS512)
+            .claim(USER_ID_KEY, userDetails.getUserId())
+            .signWith(keyProvider.getKey(), SignatureAlgorithm.HS512)
             .setExpiration(validity)
             .compact();
     }
 
     public Authentication getAuthentication(String token) {
         Claims claims = Jwts.parser()
-            .setSigningKey(key)
+            .setSigningKey(keyProvider.getKey())
             .parseClaimsJws(token)
             .getBody();
 
@@ -99,7 +89,7 @@ public class TokenProvider {
 
     public boolean validateToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(key).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(keyProvider.getKey()).parseClaimsJws(authToken);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT signature.");

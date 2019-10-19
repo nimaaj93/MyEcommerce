@@ -15,36 +15,38 @@ import com.nimaaj.ecommerce.model.input.UserRegistrationModel;
 import com.nimaaj.ecommerce.repository.AuthenticationRepository;
 import com.nimaaj.ecommerce.repository.AuthorityRepository;
 import com.nimaaj.ecommerce.repository.UserRepository;
-import com.nimaaj.ecommerce.security.SecurityUtils;
+import com.nimaaj.ecommerce.security.AuthenticationHelper;
 import com.nimaaj.ecommerce.service.AuthenticationService;
 import com.nimaaj.ecommerce.service.UserService;
 import com.nimaaj.ecommerce.util.AuthenticationUtil;
-import com.nimaaj.ecommerce.util.properties.EcommerceProperties;
 import com.nimaaj.ecommerce.util.validation.IranPhoneNumberValidator;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private AuthenticationRepository authenticationRepository;
-    @Autowired
-    private AuthorityRepository authorityRepository;
-    @Autowired
-    private EcommerceProperties ecommerceProperties;
-    @Autowired
-    private AuthenticationService authenticationService;
+    private final UserRepository userRepository;
+    private final AuthenticationRepository authenticationRepository;
+    private final AuthorityRepository authorityRepository;
+    private final AuthenticationService authenticationService;
+    private final AuthenticationHelper authenticationHelper;
+
+    public UserServiceImpl(UserRepository userRepository,
+                           AuthenticationRepository authenticationRepository,
+                           AuthorityRepository authorityRepository,
+                           AuthenticationService authenticationService,
+                           AuthenticationHelper authenticationHelper) {
+        this.userRepository = userRepository;
+        this.authenticationRepository = authenticationRepository;
+        this.authorityRepository = authorityRepository;
+        this.authenticationService = authenticationService;
+        this.authenticationHelper = authenticationHelper;
+    }
 
     @Override
     public ProfileDTO getProfile() {
@@ -86,10 +88,8 @@ public class UserServiceImpl implements UserService {
         authorities.add(userAuthority);
         user.setAuthorities(authorities);
 
-        String userSalt = AuthenticationUtil.generateSalt(ecommerceProperties.getSecurity().getUserSaltLength());
-        String hashedPass = AuthenticationUtil.hashPassword(model.getPassword(),
-                userSalt,
-                ecommerceProperties.getSecurity().getPassHashKey());
+        String userSalt = authenticationHelper.generateSalt();
+        String hashedPass = authenticationHelper.hashPassword(model.getPassword(), userSalt);
         authentication.setSalt(userSalt);
         authentication.setPassword(hashedPass);
         authentication.setUser(user);

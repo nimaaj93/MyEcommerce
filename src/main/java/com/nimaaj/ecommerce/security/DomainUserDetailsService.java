@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
@@ -26,9 +25,12 @@ public class DomainUserDetailsService implements UserDetailsService {
     private final Logger log = LoggerFactory.getLogger(DomainUserDetailsService.class);
 
     private final UserRepository userRepository;
+    private final AuthenticationHelper authenticationHelper;
 
-    public DomainUserDetailsService(UserRepository userRepository) {
+    public DomainUserDetailsService(UserRepository userRepository,
+                                    AuthenticationHelper authenticationHelper) {
         this.userRepository = userRepository;
+        this.authenticationHelper = authenticationHelper;
     }
 
     @Override
@@ -48,15 +50,16 @@ public class DomainUserDetailsService implements UserDetailsService {
 
     }
 
-    private org.springframework.security.core.userdetails.User createSpringSecurityUser(String username, User user) {
+    private CustomUserDetails createSpringSecurityUser(String username, User user) {
         if (!user.isActivated()) {
             throw new UserNotActivatedException("User " + username + " was not activated");
         }
         List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
             .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityVal()))
             .collect(Collectors.toList());
-        return new org.springframework.security.core.userdetails.User(username,
-            user.getAuthentication().getPassword(),
-            grantedAuthorities);
+
+        return new CustomUserDetails(username,
+                user.getAuthentication().getPassword(),
+                grantedAuthorities, user.getId());
     }
 }

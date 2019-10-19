@@ -1,17 +1,20 @@
 package com.nimaaj.ecommerce.web.rest.v1;
 
+import com.nimaaj.ecommerce.domain.User;
 import com.nimaaj.ecommerce.dto.ProfileDTO;
 import com.nimaaj.ecommerce.model.JWTToken;
 import com.nimaaj.ecommerce.model.input.AuthenticateModel;
 import com.nimaaj.ecommerce.model.input.UserRegistrationModel;
+import com.nimaaj.ecommerce.repository.UserRepository;
+import com.nimaaj.ecommerce.security.AuthenticationHelper;
 import com.nimaaj.ecommerce.security.jwt.JWTFilter;
 import com.nimaaj.ecommerce.security.jwt.TokenProvider;
 import com.nimaaj.ecommerce.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,12 +26,23 @@ import javax.validation.Valid;
 @RequestMapping("/api/v1/user")
 public class UserResource {
 
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private TokenProvider tokenProvider;
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final UserService userService;
+    private final TokenProvider tokenProvider;
+    private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final AuthenticationHelper authenticationHelper;
+
+    public UserResource(UserService userService,
+                        TokenProvider tokenProvider,
+                        AuthenticationManager authenticationManager,
+                        UserRepository userRepository,
+                        AuthenticationHelper authenticationHelper) {
+        this.userService = userService;
+        this.tokenProvider = tokenProvider;
+        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.authenticationHelper = authenticationHelper;
+    }
 
     @GetMapping("/profile")
     public ResponseEntity<ProfileDTO> getProfile() {
@@ -37,8 +51,14 @@ public class UserResource {
 
     @PostMapping("/authenticate")
     public ResponseEntity<JWTToken> authenticate(@Valid @RequestBody AuthenticateModel model) {
+
+        String hashPass = userRepository.findOneWithAuthoritiesByMobileNumberOrEmail(model.getUsername(), model.getUsername())
+            .map(User::getAuthentication)
+            .map(authentication -> authenticationHelper.hashPassword(model.getPassword(), authentication.getSalt()))
+            .orElseThrow(() -> new BadCredentialsException("Invalid username or pass"));
+
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(model.getUsername(), model.getPassword());
+                new UsernamePasswordAuthenticationToken(model.getUsername(), hashPass);
 
         Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
