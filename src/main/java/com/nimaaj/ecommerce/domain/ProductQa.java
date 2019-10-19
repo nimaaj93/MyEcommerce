@@ -15,9 +15,9 @@ public class ProductQa extends BaseEntity {
 
     private String question;
     private String answer;
-    @OneToOne
+    @ManyToOne
     private User askUser;
-    @OneToOne
+    @ManyToOne
     private User replyUser;
     @Temporal(TemporalType.TIMESTAMP)
     private Date replyDateTime;
