@@ -9,11 +9,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ProductRepository
         extends JpaRepository<Product, Long> {
 
     @EntityGraph(value = "Product.gridview", type = EntityGraph.EntityGraphType.LOAD)
     Page<Product> findAll(Specification<Product> specification, Pageable pageable);
+
+    Optional<Product> findByCode(String code);
 
 }

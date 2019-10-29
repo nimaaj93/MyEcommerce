@@ -1,10 +1,16 @@
 package com.nimaaj.ecommerce.service.impl;
 
 import com.nimaaj.ecommerce.domain.Product;
+import com.nimaaj.ecommerce.domain.ProductDetail;
 import com.nimaaj.ecommerce.dto.FullProductDTO;
 import com.nimaaj.ecommerce.dto.ProductDTO;
+import com.nimaaj.ecommerce.exception.DuplicateProductCodeException;
+import com.nimaaj.ecommerce.exception.ProductNotFoundException;
 import com.nimaaj.ecommerce.mapper.ProductMapper;
+import com.nimaaj.ecommerce.model.input.AddProductModel;
 import com.nimaaj.ecommerce.model.input.ProductFilterModel;
+import com.nimaaj.ecommerce.model.input.UpdateProductModel;
+import com.nimaaj.ecommerce.repository.ProductDetailRepository;
 import com.nimaaj.ecommerce.repository.ProductRepository;
 import com.nimaaj.ecommerce.service.ProductService;
 import com.nimaaj.ecommerce.service.specification.factory.SpecificationFactory;
@@ -15,6 +21,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,20 +38,24 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
     private final ProductRepository productRepository;
     private final SpecificationFactory<Product, ProductFilterModel> productSpecificationFactory;
+    private final ProductDetailRepository productDetailRepository;
 
     @SuppressWarnings("unchecked")
     public ProductServiceImpl(ProductMapper productMapper,
                               ProductRepository productRepository,
                               @Qualifier("productSearchSpecificationFactory")
-                              SpecificationFactory productSpecificationFactory) {
+                              SpecificationFactory productSpecificationFactory,
+                              ProductDetailRepository productDetailRepository) {
         this.productMapper = productMapper;
         this.productRepository = productRepository;
         // This is safe due to injection by qualifier
         this.productSpecificationFactory =
                 (SpecificationFactory<Product, ProductFilterModel>)productSpecificationFactory;
+        this.productDetailRepository = productDetailRepository;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProductDTO> getAllProducts() {
         LOGGER.debug("getAllProducts() called");
         return productRepository.findAll()
@@ -52,6 +64,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
     public Page<FullProductDTO> searchProducts(
             Pageable pageable, ProductFilterModel productFilterModel) {
         LOGGER.debug("searchProducts() called for pageable {} and filter {}", pageable, productFilterModel);
@@ -61,4 +75,51 @@ public class ProductServiceImpl implements ProductService {
         return productPage.map(productMapper::toFullProductDto);
     }
 
+    @Override
+    @Transactional
+    public FullProductDTO addProduct(AddProductModel addProductModel) {
+        LOGGER.debug("addProduct() called for addProductModel {}", addProductModel);
+        validateAddProduct(addProductModel);
+        Product product = productMapper.toEntity(addProductModel);
+        product = productRepository.save(product);
+        product = addProductDetail(addProductModel, product);
+        return productMapper.toFullProductDto(product);
+    }
+
+    private void validateAddProduct(AddProductModel addProductModel) {
+        productRepository.findByCode(addProductModel.getCode())
+                .ifPresent(product -> {
+                    throw new DuplicateProductCodeException();
+                });
+    }
+
+    private Product addProductDetail(AddProductModel addProductModel, Product product) {
+        ProductDetail productDetail = new ProductDetail();
+        productDetail.setProduct(product);
+        productDetail.setDetails(addProductModel.getDetails());
+        productDetail = productDetailRepository.save(productDetail);
+        product.setDetail(productDetail);
+        product = productRepository.save(product);
+        return product;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public FullProductDTO getProductByCode(String code) {
+        LOGGER.debug("getProductByCode() called for code {}", code);
+        return productRepository.findByCode(code)
+                .map(productMapper::toFullProductDto)
+                .orElseThrow(ProductNotFoundException::new);
+    }
+
+    @Override
+    public FullProductDTO updateProduct(Long id, UpdateProductModel model) {
+        LOGGER.debug("updateProduct() called for {}", model);
+        Product product = productRepository.findById(id)
+                .orElseThrow(ProductNotFoundException::new);
+
+        product = productRepository.save(product);
+
+        return productMapper.toFullProductDto(product);
+    }
 }
