@@ -1,29 +1,52 @@
 package com.nimaaj.ecommerce.service.impl;
 
 import com.nimaaj.ecommerce.domain.ProductCategory;
+import com.nimaaj.ecommerce.dto.ProductCategoryDTO;
+import com.nimaaj.ecommerce.dto.ProductCategoryTreeDTO;
+import com.nimaaj.ecommerce.exception.ParentNotFoundException;
 import com.nimaaj.ecommerce.exception.ProductCategoryNotFoundException;
+import com.nimaaj.ecommerce.mapper.ProductCategoryMapper;
+import com.nimaaj.ecommerce.model.input.AddProductCategoryModel;
+import com.nimaaj.ecommerce.model.input.UpdateProductCategoryModel;
 import com.nimaaj.ecommerce.repository.ProductCategoryRepository;
 import com.nimaaj.ecommerce.service.ProductCategoryService;
 import com.nimaaj.ecommerce.util.Empty;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.OptionalInt;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by K550 VX on 3/5/2019.
  */
 @Service
+@Transactional
+@Validated
 public class ProductCategoryServiceImpl implements ProductCategoryService {
 
-    @Autowired
-    private ProductCategoryRepository productCategoryRepository;
+    private final static Logger LOGGER = LoggerFactory.getLogger(ProductCategoryServiceImpl.class);
+    private final ProductCategoryRepository productCategoryRepository;
+    private final ProductCategoryMapper productCategoryMapper;
+
+    public ProductCategoryServiceImpl(ProductCategoryRepository productCategoryRepository,
+                                      ProductCategoryMapper productCategoryMapper) {
+        this.productCategoryRepository = productCategoryRepository;
+        this.productCategoryMapper = productCategoryMapper;
+    }
 
     @Override
-    public List<Long> getInclusiveChildrenCategoryIdsForProductCategory(Long productCategoryId) {
-
+    public List<Long> getInclusiveChildrenCategoryIdsForProductCategory(@NotNull Long productCategoryId) {
+        LOGGER.debug("getInclusiveChildrenCategoryIdsForProductCategory() called for {}", productCategoryId);
         ProductCategory productCategory = productCategoryRepository.findById(productCategoryId)
                 .orElseThrow(ProductCategoryNotFoundException::new);
 
@@ -55,4 +78,109 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         return result;
     }
 
+    @Override
+    public List<ProductCategoryDTO> getAllProductCategories() {
+        LOGGER.debug("getAllProductCategories() called");
+        return productCategoryRepository.findAll()
+                .stream()
+                .map(productCategoryMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProductCategoryTreeDTO> getAllProductCategoriesTree() {
+        LOGGER.debug("getAllProductCategoriesTree() called");
+        List<ProductCategoryTreeDTO> rootCategories = productCategoryRepository.findAllByParentIsNull()
+                .stream()
+                .map(productCategoryMapper::toTreeDto)
+                .map(root -> {
+                    loadChildrenForTreeDto(root);
+                    return root;
+                })
+                .collect(Collectors.toList());
+
+        return rootCategories;
+    }
+
+    private void loadChildrenForTreeDto(ProductCategoryTreeDTO treeDTO) {
+        List<ProductCategory> children = productCategoryRepository.findAllByParent_Id(treeDTO.getId());
+        if (Empty.isNotEmpty(children)) {
+            List<ProductCategoryTreeDTO> childrenTreeDtos = children.stream()
+                    .map(productCategoryMapper::toTreeDto)
+                    .map(child -> {
+                        loadChildrenForTreeDto(child);
+                        return child;
+                    })
+                    .collect(Collectors.toList());
+            treeDTO.setChildren(childrenTreeDtos);
+        }
+    }
+
+    @Override
+    public ProductCategoryDTO create(@Valid AddProductCategoryModel model) {
+        LOGGER.debug("create() called for {}", model);
+        ProductCategory parent = null;
+        if (Empty.isNotEmpty(model.getParentId())) {
+            parent = productCategoryRepository.findById(model.getParentId())
+                    .orElseThrow(ParentNotFoundException::new);
+        }
+        int currentMaxOrderForParent =
+                productCategoryRepository.findTopByParent_IdOrderByOrderValDesc(model.getParentId())
+                .orElse(0);
+
+        ProductCategory entity = productCategoryMapper.toEntity(model);
+        entity.setOrderVal(++currentMaxOrderForParent);
+        return productCategoryMapper.toDto(productCategoryRepository.save(entity));
+    }
+
+    @Override
+    public ProductCategoryDTO update(@Valid UpdateProductCategoryModel model) {
+        LOGGER.debug("update() run for {}", model);
+        ProductCategory productCategory = productCategoryRepository.findById(model.getId())
+                .orElseThrow(ProductCategoryNotFoundException::new);
+
+        productCategoryMapper.mapForUpdate(productCategory, model);
+        return productCategoryMapper.toDto(productCategoryRepository.save(productCategory));
+    }
+
+    @Override
+    public ProductCategoryDTO getById(@NotNull Long id) {
+        LOGGER.debug("getById() run for {}", id);
+        return productCategoryRepository.findById(id)
+                .map(productCategoryMapper::toDto)
+                .orElseThrow(ProductCategoryNotFoundException::new);
+    }
+
+    @Override
+    public ProductCategoryDTO reorder(Long id, Integer orderVal) {
+        LOGGER.debug("reorder() run for id {} and orderVal {}", id, orderVal);
+        ProductCategory productCategory = productCategoryRepository.findById(id)
+                .orElseThrow(ProductCategoryNotFoundException::new);
+        Long parentId = productCategory.getParent() != null ? productCategory.getParent().getId() : null;
+        List<ProductCategory> siblings = productCategoryRepository.findAllByParent_Id(parentId);
+        OptionalInt maxOrder = siblings.stream().mapToInt(ProductCategory::getOrderVal).max();
+        if (maxOrder.isPresent()) {
+            int maxOrderVal = maxOrder.getAsInt();
+            if (orderVal > maxOrderVal) {
+                productCategory.setOrderVal(++maxOrderVal);
+                productCategory = productCategoryRepository.save(productCategory);
+            } else {
+                siblings.stream()
+                        .filter(sibling -> !sibling.getId().equals(id))
+                        .filter(sibling -> sibling.getOrderVal() >= orderVal)
+                        .forEach(sibling -> {
+                            int currentOrderVal = sibling.getOrderVal();
+                            sibling.setOrderVal(++currentOrderVal);
+                            productCategoryRepository.save(sibling);
+                        });
+                productCategory.setOrderVal(orderVal);
+                productCategory = productCategoryRepository.save(productCategory);
+            }
+        } else {
+            productCategory.setOrderVal(1);
+            productCategory = productCategoryRepository.save(productCategory);
+        }
+        return productCategoryMapper.toDto(productCategory);
+    }
 }

@@ -88,4 +88,18 @@ public class ProductCategory implements Serializable {
     public void setProductCategoryAttrs(List<ProductCategoryAttr> productCategoryAttrs) {
         this.productCategoryAttrs = productCategoryAttrs;
     }
+
+    @Override
+    public String toString() {
+        return "ProductCategory{" +
+                "id=" + id +
+                ", titleFa='" + titleFa + '\'' +
+                ", titleEn='" + titleEn + '\'' +
+                ", description='" + description + '\'' +
+                ", orderVal=" + orderVal +
+                ", parent=" + parent +
+                ", children=" + children +
+                ", productCategoryAttrs=" + productCategoryAttrs +
+                '}';
+    }
 }
