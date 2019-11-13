@@ -1,5 +1,7 @@
 package com.nimaaj.ecommerce.domain;
 
+import com.nimaaj.ecommerce.enumaration.ProductCategoryAttrType;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,7 +17,8 @@ public class ProductCategoryAttr extends BaseEntity {
     private String titleFa;
     private String description;
     private boolean required;
-
+    private ProductCategoryAttrType attrType;
+    private String groupId;
     @ManyToOne
     private ProductCategory productCategory;
 
@@ -66,5 +69,21 @@ public class ProductCategoryAttr extends BaseEntity {
 
     public void setProductCategory(ProductCategory productCategory) {
         this.productCategory = productCategory;
+    }
+
+    public ProductCategoryAttrType getAttrType() {
+        return attrType;
+    }
+
+    public void setAttrType(ProductCategoryAttrType attrType) {
+        this.attrType = attrType;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 }
