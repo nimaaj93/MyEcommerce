@@ -12,6 +12,7 @@ import com.nimaaj.ecommerce.model.input.ProductFilterModel;
 import com.nimaaj.ecommerce.model.input.UpdateProductModel;
 import com.nimaaj.ecommerce.repository.ProductDetailRepository;
 import com.nimaaj.ecommerce.repository.ProductRepository;
+import com.nimaaj.ecommerce.service.ProductMediaService;
 import com.nimaaj.ecommerce.service.ProductService;
 import com.nimaaj.ecommerce.service.specification.factory.SpecificationFactory;
 import org.slf4j.Logger;
@@ -22,7 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,19 +40,22 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final SpecificationFactory<Product, ProductFilterModel> productSpecificationFactory;
     private final ProductDetailRepository productDetailRepository;
+    private final ProductMediaService productMediaService;
 
     @SuppressWarnings("unchecked")
     public ProductServiceImpl(ProductMapper productMapper,
                               ProductRepository productRepository,
                               @Qualifier("productSearchSpecificationFactory")
-                              SpecificationFactory productSpecificationFactory,
-                              ProductDetailRepository productDetailRepository) {
+                                      SpecificationFactory productSpecificationFactory,
+                              ProductDetailRepository productDetailRepository,
+                              ProductMediaService productMediaService) {
         this.productMapper = productMapper;
         this.productRepository = productRepository;
         // This is safe due to injection by qualifier
         this.productSpecificationFactory =
                 (SpecificationFactory<Product, ProductFilterModel>)productSpecificationFactory;
         this.productDetailRepository = productDetailRepository;
+        this.productMediaService = productMediaService;
     }
 
     @Override
@@ -83,6 +87,9 @@ public class ProductServiceImpl implements ProductService {
         Product product = productMapper.toEntity(addProductModel);
         product = productRepository.save(product);
         product = addProductDetail(addProductModel, product);
+        if (CollectionUtils.isEmpty(addProductModel.getMediaIds())) {
+            product = productMediaService.addMediaIdsToNewProduct(product, addProductModel.getMediaIds());
+        }
         return productMapper.toFullProductDto(product);
     }
 
@@ -113,6 +120,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public FullProductDTO updateProduct(Long id, UpdateProductModel model) {
         LOGGER.debug("updateProduct() called for {}", model);
         Product product = productRepository.findById(id)

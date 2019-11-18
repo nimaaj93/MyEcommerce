@@ -5,6 +5,7 @@ import com.nimaaj.ecommerce.enumaration.ProductStatus;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by K550 VX on 27.10.2019.
@@ -32,6 +33,7 @@ public class AddProductModel {
     @Min(value = 0L)
     private Long categoryId;
     private String details;
+    private List<Long> mediaIds;
 
     public String getCode() {
         return code;
@@ -105,6 +107,14 @@ public class AddProductModel {
         this.details = details;
     }
 
+    public List<Long> getMediaIds() {
+        return mediaIds;
+    }
+
+    public void setMediaIds(List<Long> mediaIds) {
+        this.mediaIds = mediaIds;
+    }
+
     @Override
     public String toString() {
         return "AddProductModel{" +
@@ -116,6 +126,7 @@ public class AddProductModel {
                 ", stock=" + stock +
                 ", status=" + status +
                 ", categoryId=" + categoryId +
+                ", mediaIds=" + mediaIds +
                 ", details='" + details + '\'' +
                 '}';
     }

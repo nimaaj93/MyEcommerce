@@ -141,4 +141,22 @@ public class Product extends BaseEntity {
     public void setContainingBags(List<UserBag> containingBags) {
         this.containingBags = containingBags;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", titleEn='" + titleEn + '\'' +
+                ", titleFa='" + titleFa + '\'' +
+                ", price=" + price +
+                ", manufacturer=" + manufacturer +
+                ", stock=" + stock +
+                ", status=" + status +
+                ", category=" + category +
+                ", productMediaRels=" + productMediaRels +
+                ", detail=" + detail +
+                ", containingBags=" + containingBags +
+                '}';
+    }
 }
