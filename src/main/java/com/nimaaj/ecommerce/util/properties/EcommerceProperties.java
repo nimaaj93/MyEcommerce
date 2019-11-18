@@ -10,9 +10,14 @@ import org.springframework.validation.annotation.Validated;
 public class EcommerceProperties {
 
     private final Security security = new Security();
+    private final Storage storage = new Storage();
 
     public Security getSecurity() {
         return security;
+    }
+
+    public Storage getStorage() {
+        return storage;
     }
 
     public static class Security {
@@ -70,6 +75,19 @@ public class EcommerceProperties {
 
         public void setUserSaltLength(Integer userSaltLength) {
             this.userSaltLength = userSaltLength;
+        }
+    }
+
+    public static class Storage {
+
+        private String basePath;
+
+        public String getBasePath() {
+            return basePath;
+        }
+
+        public void setBasePath(String basePath) {
+            this.basePath = basePath;
         }
     }
 

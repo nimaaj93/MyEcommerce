@@ -23,6 +23,8 @@ public class Media extends BaseEntity {
     private MediaStatus status;
     private Long size;
     private String format;
+    private String caption;
+    private String fileUuid;
     @OneToMany(mappedBy = "media")
     private List<ProductMediaRel> productMediaRels;
 
@@ -81,6 +83,22 @@ public class Media extends BaseEntity {
 
     public void setFormat(String format) {
         this.format = format;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
+
+    public String getFileUuid() {
+        return fileUuid;
+    }
+
+    public void setFileUuid(String fileUuid) {
+        this.fileUuid = fileUuid;
     }
 
     public List<ProductMediaRel> getProductMediaRels() {

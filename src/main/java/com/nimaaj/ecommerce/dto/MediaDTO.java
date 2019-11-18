@@ -16,6 +16,8 @@ public class MediaDTO {
     private Long size;
     private String format;
     private MediaType mediaType;
+    private String caption;
+    private String fileUuid;
 
     public Long getId() {
         return id;
@@ -79,5 +81,21 @@ public class MediaDTO {
 
     public void setMediaType(MediaType mediaType) {
         this.mediaType = mediaType;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
+
+    public String getFileUuid() {
+        return fileUuid;
+    }
+
+    public void setFileUuid(String fileUuid) {
+        this.fileUuid = fileUuid;
     }
 }
