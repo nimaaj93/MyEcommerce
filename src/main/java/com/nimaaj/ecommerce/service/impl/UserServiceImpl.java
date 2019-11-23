@@ -18,7 +18,6 @@ import com.nimaaj.ecommerce.repository.UserRepository;
 import com.nimaaj.ecommerce.security.AuthenticationHelper;
 import com.nimaaj.ecommerce.service.AuthenticationService;
 import com.nimaaj.ecommerce.service.UserService;
-import com.nimaaj.ecommerce.util.AuthenticationUtil;
 import com.nimaaj.ecommerce.util.validation.IranPhoneNumberValidator;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.springframework.stereotype.Service;

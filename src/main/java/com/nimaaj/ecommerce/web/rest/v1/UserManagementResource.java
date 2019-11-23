@@ -18,7 +18,8 @@ public class UserManagementResource {
     }
 
     @GetMapping
-    public ResponseEntity<Page<UserDTO>> pageUsers(Pageable pageable, String query) {
+    public ResponseEntity<Page<UserDTO>> pageUsers(Pageable pageable,
+                                                   @RequestParam(value = "query", required = false) String query) {
         return ResponseEntity.ok(userManagementService.pageUsers(pageable, query));
     }
 
