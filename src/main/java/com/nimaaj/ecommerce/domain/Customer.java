@@ -15,8 +15,7 @@ public class Customer extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nameFa;
-    private String nameEn;
+    private String customerName;
     @Enumerated(EnumType.STRING)
     private CustomerType customerType;
 
@@ -33,20 +32,12 @@ public class Customer extends BaseEntity {
         this.id = id;
     }
 
-    public String getNameFa() {
-        return nameFa;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setNameFa(String nameFa) {
-        this.nameFa = nameFa;
-    }
-
-    public String getNameEn() {
-        return nameEn;
-    }
-
-    public void setNameEn(String nameEn) {
-        this.nameEn = nameEn;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public CustomerType getCustomerType() {

@@ -1,6 +1,7 @@
 package com.nimaaj.ecommerce.domain;
 
 import com.nimaaj.ecommerce.enumaration.Gender;
+import com.nimaaj.ecommerce.enumaration.UserState;
 import com.nimaaj.ecommerce.enumaration.UserType;
 
 import javax.persistence.*;
@@ -34,6 +35,8 @@ public class User extends BaseEntity {
     @ManyToMany
     private Set<Authority> authorities;
     private boolean activated;
+    @Enumerated(EnumType.STRING)
+    private UserState userState;
 
     public Long getId() {
         return id;
@@ -137,5 +140,13 @@ public class User extends BaseEntity {
 
     public void setActivated(boolean activated) {
         this.activated = activated;
+    }
+
+    public UserState getUserState() {
+        return userState;
+    }
+
+    public void setUserState(UserState userState) {
+        this.userState = userState;
     }
 }
