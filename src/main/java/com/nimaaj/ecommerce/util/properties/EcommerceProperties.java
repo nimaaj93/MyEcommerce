@@ -28,6 +28,8 @@ public class EcommerceProperties {
         private String base64Secret;
         private String passHashKey;
         private Integer userSaltLength;
+        private Integer otpLength;
+        private Long otpValiditySeconds;
 
         public Long getTokenValidityInSeconds() {
             return tokenValidityInSeconds;
@@ -75,6 +77,22 @@ public class EcommerceProperties {
 
         public void setUserSaltLength(Integer userSaltLength) {
             this.userSaltLength = userSaltLength;
+        }
+
+        public Integer getOtpLength() {
+            return otpLength;
+        }
+
+        public void setOtpLength(Integer otpLength) {
+            this.otpLength = otpLength;
+        }
+
+        public Long getOtpValiditySeconds() {
+            return otpValiditySeconds;
+        }
+
+        public void setOtpValiditySeconds(Long otpValiditySeconds) {
+            this.otpValiditySeconds = otpValiditySeconds;
         }
     }
 

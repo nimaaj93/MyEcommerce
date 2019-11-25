@@ -41,3 +41,4 @@ ecommerce:
     base64Secret: ZGJzb2dqdzNGcmU1NDQzNHNsbnNsbnMzMzV1Z3NoZXk0MjVnZmZnMzUzQURGMzRmc3NoZTQ1ZGZoZ2hlUVdRZmZzYURGRFNTRjU1NFNGRFNGU2hrbGxyb2plcmt2bmEzNDh5ZGdqaHI4eWdmZ2tqd2RmZzQ1
     pass-hash-key: M64a72n72bmewbwFoed4tlknbed97y5jnlkvdwefisgfonDASfhbfsdgTRWTG436ugjm547djgfx3
     user-salt-length: 30
+    otp-length: 6

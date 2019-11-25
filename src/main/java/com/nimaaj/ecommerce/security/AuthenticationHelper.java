@@ -24,4 +24,8 @@ public class AuthenticationHelper {
         return AuthenticationUtil.generateSalt(ecommerceProperties.getSecurity().getUserSaltLength());
     }
 
+    public String generateOtp() {
+        return AuthenticationUtil.generateOtp(ecommerceProperties.getSecurity().getOtpLength());
+    }
+
 }

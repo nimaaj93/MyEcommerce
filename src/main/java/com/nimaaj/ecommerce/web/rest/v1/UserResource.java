@@ -2,8 +2,10 @@ package com.nimaaj.ecommerce.web.rest.v1;
 
 import com.nimaaj.ecommerce.domain.User;
 import com.nimaaj.ecommerce.dto.ProfileDTO;
+import com.nimaaj.ecommerce.dto.UserDTO;
 import com.nimaaj.ecommerce.model.JWTToken;
 import com.nimaaj.ecommerce.model.input.AuthenticateModel;
+import com.nimaaj.ecommerce.model.input.OtpVerification;
 import com.nimaaj.ecommerce.model.input.UserRegistrationModel;
 import com.nimaaj.ecommerce.repository.UserRepository;
 import com.nimaaj.ecommerce.security.AuthenticationHelper;
@@ -72,6 +74,13 @@ public class UserResource {
     public ResponseEntity<HttpStatus> register(@Valid @RequestBody UserRegistrationModel model) {
         userService.register(model);
         return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PostMapping("/activate")
+    public ResponseEntity<JWTToken> activateUser(@Valid @RequestBody OtpVerification otpVerification) {
+        UserDTO userDTO = userService.activateUser(otpVerification);
+        //TODO add otp auth provider and move token issuing from resource
+        return null;
     }
 
 }

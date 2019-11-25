@@ -1,22 +1,35 @@
 package com.nimaaj.ecommerce.model.input;
 
+import com.nimaaj.ecommerce.enumaration.Gender;
+import com.nimaaj.ecommerce.util.validation.annotation.IranPhoneNumber;
+
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class UserRegistrationModel {
 
     @NotBlank
-    private String username;
+    @IranPhoneNumber
+    private String mobileNumber;
     @NotBlank
     @Size(min = 6)
     private String password;
+    @Email
+    @NotBlank
+    private String email;
+    @NotNull
+    private Gender gender;
+    @NotNull
+    private Long dateOfBirth;
 
-    public String getUsername() {
-        return username;
+    public String getMobileNumber() {
+        return mobileNumber;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public String getPassword() {
@@ -25,5 +38,29 @@ public class UserRegistrationModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public Long getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Long dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }

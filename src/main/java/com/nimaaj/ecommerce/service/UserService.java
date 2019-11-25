@@ -1,6 +1,8 @@
 package com.nimaaj.ecommerce.service;
 
 import com.nimaaj.ecommerce.dto.ProfileDTO;
+import com.nimaaj.ecommerce.dto.UserDTO;
+import com.nimaaj.ecommerce.model.input.OtpVerification;
 import com.nimaaj.ecommerce.model.input.ResetPassModel;
 import com.nimaaj.ecommerce.model.input.UserRegistrationModel;
 
@@ -8,8 +10,10 @@ public interface UserService {
 
     ProfileDTO getProfile();
 
-    void register(UserRegistrationModel model);
+    UserDTO register(UserRegistrationModel model);
 
     void resetPass(ResetPassModel model);
+
+    UserDTO activateUser(OtpVerification otpVerification);
 
 }
