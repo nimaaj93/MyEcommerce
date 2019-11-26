@@ -1,11 +1,14 @@
 package com.nimaaj.ecommerce.service;
 
-import com.nimaaj.ecommerce.enumaration.NotificationChannel;
+import com.nimaaj.ecommerce.dto.NotificationDTO;
+import com.nimaaj.ecommerce.model.input.CustomNotificationRequest;
+import com.nimaaj.ecommerce.model.input.TemplateNotificationRequest;
 
-import java.util.ArrayList;
 
 public interface NotificationService {
 
-    void sendTemplateNotification(NotificationChannel notificationChannel, Long userId, String templateCode, ArrayList<String> params);
+    NotificationDTO sendTemplateNotification(TemplateNotificationRequest request);
+
+    NotificationDTO sendCustomNotification(CustomNotificationRequest request);
 
 }

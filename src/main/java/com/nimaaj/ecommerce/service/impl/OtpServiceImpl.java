@@ -6,6 +6,7 @@ import com.nimaaj.ecommerce.enumaration.NotificationChannel;
 import com.nimaaj.ecommerce.enumaration.NotificationTemplates;
 import com.nimaaj.ecommerce.exception.InvalidOtpCodeException;
 import com.nimaaj.ecommerce.exception.UserNotFoundException;
+import com.nimaaj.ecommerce.model.input.TemplateNotificationRequest;
 import com.nimaaj.ecommerce.repository.OtpRequestRepository;
 import com.nimaaj.ecommerce.repository.UserRepository;
 import com.nimaaj.ecommerce.service.NotificationService;
@@ -19,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -52,11 +55,14 @@ public class OtpServiceImpl implements OtpService {
         //TODO add params
         ArrayList<String> params = new ArrayList<>();
 
-        notificationService.sendTemplateNotification(
-                NotificationChannel.SMS,
-                user.getId(),
-                NotificationTemplates.OTP.getCode(),
-                params);
+        TemplateNotificationRequest templateNotificationRequest = new TemplateNotificationRequest();
+        templateNotificationRequest.setNotificationChannel(NotificationChannel.SMS);
+        templateNotificationRequest.setTemplateCode(NotificationTemplates.OTP.getCode());
+        templateNotificationRequest.setParams(params);
+        Set<Long> userIds = new HashSet<>();
+        userIds.add(user.getId());
+        templateNotificationRequest.setUserIds(userIds);
+        notificationService.sendTemplateNotification(templateNotificationRequest);
     }
 
     @Override
