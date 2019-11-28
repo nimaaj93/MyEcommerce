@@ -15,6 +15,7 @@ public class UserRegistrationModel {
     private String mobileNumber;
     @NotBlank
     @Size(min = 6)
+    //TODO add password validator
     private String password;
     @Email
     @NotBlank

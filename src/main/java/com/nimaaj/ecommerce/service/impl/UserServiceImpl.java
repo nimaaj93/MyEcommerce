@@ -7,18 +7,17 @@ import com.nimaaj.ecommerce.dto.ProfileDTO;
 import com.nimaaj.ecommerce.dto.UserDTO;
 import com.nimaaj.ecommerce.enumaration.UserRole;
 import com.nimaaj.ecommerce.enumaration.UserType;
-import com.nimaaj.ecommerce.exception.AuthorityNotFoundException;
-import com.nimaaj.ecommerce.exception.InvalidCurrentPassException;
-import com.nimaaj.ecommerce.exception.UserExistsException;
-import com.nimaaj.ecommerce.exception.UserNotFoundException;
+import com.nimaaj.ecommerce.exception.*;
 import com.nimaaj.ecommerce.mapper.UserMapper;
 import com.nimaaj.ecommerce.model.input.OtpVerification;
 import com.nimaaj.ecommerce.model.input.ResetPassModel;
+import com.nimaaj.ecommerce.model.input.UpdatePasswordModel;
 import com.nimaaj.ecommerce.model.input.UserRegistrationModel;
 import com.nimaaj.ecommerce.repository.AuthenticationRepository;
 import com.nimaaj.ecommerce.repository.AuthorityRepository;
 import com.nimaaj.ecommerce.repository.UserRepository;
 import com.nimaaj.ecommerce.security.AuthenticationHelper;
+import com.nimaaj.ecommerce.security.SecurityUtils;
 import com.nimaaj.ecommerce.service.AuthenticationService;
 import com.nimaaj.ecommerce.service.OtpService;
 import com.nimaaj.ecommerce.service.UserService;
@@ -31,6 +30,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -139,5 +139,18 @@ public class UserServiceImpl implements UserService {
         user.setActivated(true);
         user = userRepository.save(user);
         return userMapper.toDto(user);
+    }
+
+    @Override
+    public void changePassword(UpdatePasswordModel updatePasswordModel) {
+        Long userId = SecurityUtils.getCurrentUserId().orElseThrow(IllegalStateException::new);
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        String hashedOldPass = authenticationHelper.hashPassword(updatePasswordModel.getOldPassword(), user.getAuthentication().getSalt());
+        if (!hashedOldPass.equals(user.getAuthentication().getPassword())) {
+            throw new InvalidOldPasswordException();
+        }
+        user.getAuthentication().setPassword(
+                authenticationHelper.hashPassword(updatePasswordModel.getNewPassword(), user.getAuthentication().getSalt()));
+        authenticationRepository.save(user.getAuthentication());
     }
 }

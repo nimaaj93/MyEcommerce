@@ -4,6 +4,7 @@ import com.nimaaj.ecommerce.dto.ProfileDTO;
 import com.nimaaj.ecommerce.dto.UserDTO;
 import com.nimaaj.ecommerce.model.input.OtpVerification;
 import com.nimaaj.ecommerce.model.input.ResetPassModel;
+import com.nimaaj.ecommerce.model.input.UpdatePasswordModel;
 import com.nimaaj.ecommerce.model.input.UserRegistrationModel;
 
 public interface UserService {
@@ -16,4 +17,5 @@ public interface UserService {
 
     UserDTO activateUser(OtpVerification otpVerification);
 
+    void changePassword(UpdatePasswordModel updatePasswordModel);
 }

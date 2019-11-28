@@ -6,6 +6,7 @@ import com.nimaaj.ecommerce.dto.UserDTO;
 import com.nimaaj.ecommerce.model.JWTToken;
 import com.nimaaj.ecommerce.model.input.AuthenticateModel;
 import com.nimaaj.ecommerce.model.input.OtpVerification;
+import com.nimaaj.ecommerce.model.input.UpdatePasswordModel;
 import com.nimaaj.ecommerce.model.input.UserRegistrationModel;
 import com.nimaaj.ecommerce.repository.UserRepository;
 import com.nimaaj.ecommerce.security.AuthenticationHelper;
@@ -81,6 +82,12 @@ public class UserResource {
         UserDTO userDTO = userService.activateUser(otpVerification);
         //TODO add otp auth provider and move token issuing from resource
         return null;
+    }
+
+    @PatchMapping("/password")
+    public ResponseEntity<HttpStatus> changePassword(@Valid @RequestBody UpdatePasswordModel updatePasswordModel) {
+        userService.changePassword(updatePasswordModel);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
 }
