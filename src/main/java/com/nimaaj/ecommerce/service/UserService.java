@@ -13,9 +13,8 @@ public interface UserService {
 
     UserDTO register(UserRegistrationModel model);
 
-    void resetPass(ResetPassModel model);
-
     UserDTO activateUser(OtpVerification otpVerification);
 
     void changePassword(UpdatePasswordModel updatePasswordModel);
+
 }

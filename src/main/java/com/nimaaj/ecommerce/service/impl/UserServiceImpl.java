@@ -21,6 +21,8 @@ import com.nimaaj.ecommerce.security.SecurityUtils;
 import com.nimaaj.ecommerce.service.AuthenticationService;
 import com.nimaaj.ecommerce.service.OtpService;
 import com.nimaaj.ecommerce.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +34,8 @@ import java.util.Set;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
     private final AuthenticationRepository authenticationRepository;
@@ -113,22 +117,6 @@ public class UserServiceImpl implements UserService {
 
         authorities.add(userAuthority);
         user.setAuthorities(authorities);
-    }
-
-    @Override
-    public void resetPass(ResetPassModel model) {
-
-        String currentHash = authenticationService.hashPassForCurrentUser(model.getCurrentPassword());
-        Authentication authentication = authenticationService.getCurrentAuthentication();
-
-        if (!authentication.getPassword().equals(currentHash)) {
-            throw new InvalidCurrentPassException();
-        }
-
-        String newHash = authenticationService.hashPassForCurrentUser(model.getNewPassword());
-        authentication.setPassword(newHash);
-
-        authenticationRepository.save(authentication);
     }
 
     @Override

@@ -1,20 +1,24 @@
 package com.nimaaj.ecommerce.model.input;
 
+
+import com.nimaaj.ecommerce.util.validation.annotation.SecurePassword;
+
 import javax.validation.constraints.NotBlank;
 
 public class ResetPassModel {
 
     @NotBlank
-    private String currentPassword;
+    private String requestCode;
     @NotBlank
+    @SecurePassword
     private String newPassword;
 
-    public String getCurrentPassword() {
-        return currentPassword;
+    public String getRequestCode() {
+        return requestCode;
     }
 
-    public void setCurrentPassword(String currentPassword) {
-        this.currentPassword = currentPassword;
+    public void setRequestCode(String requestCode) {
+        this.requestCode = requestCode;
     }
 
     public String getNewPassword() {
@@ -23,5 +27,13 @@ public class ResetPassModel {
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    @Override
+    public String toString() {
+        return "ResetPassModel{" +
+                "requestCode='" + requestCode + '\'' +
+                ", newPassword='" + newPassword + '\'' +
+                '}';
     }
 }

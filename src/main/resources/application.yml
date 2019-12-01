@@ -42,3 +42,9 @@ ecommerce:
     pass-hash-key: M64a72n72bmewbwFoed4tlknbed97y5jnlkvdwefisgfonDASfhbfsdgTRWTG436ugjm547djgfx3
     user-salt-length: 30
     otp-length: 6
+    otp-validity-seconds: 300
+    reset-pass-code-length: 40
+    reset-pass-code-validity-seconds: 1200
+  storage:
+#    TODO set
+    base-path: path/to/storage

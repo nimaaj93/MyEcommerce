@@ -2,6 +2,7 @@ package com.nimaaj.ecommerce.model.input;
 
 import com.nimaaj.ecommerce.enumaration.Gender;
 import com.nimaaj.ecommerce.util.validation.annotation.IranPhoneNumber;
+import com.nimaaj.ecommerce.util.validation.annotation.SecurePassword;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -14,8 +15,7 @@ public class UserRegistrationModel {
     @IranPhoneNumber
     private String mobileNumber;
     @NotBlank
-    @Size(min = 6)
-    //TODO add password validator
+    @SecurePassword
     private String password;
     @Email
     @NotBlank

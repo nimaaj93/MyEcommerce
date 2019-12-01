@@ -28,4 +28,8 @@ public class AuthenticationHelper {
         return AuthenticationUtil.generateOtp(ecommerceProperties.getSecurity().getOtpLength());
     }
 
+    public String generateResetPasswordRequestCode() {
+        return AuthenticationUtil.generateResetPasswordCode(ecommerceProperties.getSecurity().getResetPassCodeLength());
+    }
+
 }

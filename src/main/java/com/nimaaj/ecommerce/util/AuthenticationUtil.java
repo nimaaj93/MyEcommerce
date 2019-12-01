@@ -5,7 +5,10 @@ import org.apache.commons.codec.binary.Hex;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-public abstract class AuthenticationUtil {
+public class AuthenticationUtil {
+
+    private AuthenticationUtil() {
+    }
 
     private final static char[] SALT_CHARS =
             {'a','b','c','d','e','f','g','h','i','j','k','l','m','n',
@@ -14,6 +17,12 @@ public abstract class AuthenticationUtil {
             'U','V','W','X','Y','Z','1','2','3','4','5','6','7','8','9','0'};
 
     private final static char[] OTP_CHARS = {'1','2','3','4','5','6','7','8','9','0'};
+
+    private final static char[] RESET_PASS_CODE_CHARS =
+            {'a','b','c','d','e','f','g','h','i','j','k','l','m','n',
+                    'o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D',
+                    'E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T',
+                    'U','V','W','X','Y','Z','1','2','3','4','5','6','7','8','9','0'};
 
     public static String generateSalt(int length) {
         StringBuilder sb = new StringBuilder();
@@ -61,6 +70,17 @@ public abstract class AuthenticationUtil {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static String generateResetPasswordCode(int length) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0 ; i < length ; i++) {
+            double cr = Math.random() * (double)RESET_PASS_CODE_CHARS.length;
+            int index = (int)Math.floor(cr);
+            sb.append(RESET_PASS_CODE_CHARS[index]);
+        }
+        sb.append(System.currentTimeMillis());
+        return sb.toString();
     }
 
 }

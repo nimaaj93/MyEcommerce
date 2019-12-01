@@ -1,5 +1,7 @@
 package com.nimaaj.ecommerce.model.input;
 
+import com.nimaaj.ecommerce.util.validation.annotation.SecurePassword;
+
 import javax.validation.constraints.NotBlank;
 
 public class UpdatePasswordModel {
@@ -7,7 +9,7 @@ public class UpdatePasswordModel {
     @NotBlank
     private String oldPassword;
     @NotBlank
-    //TODO add password validator
+    @SecurePassword
     private String newPassword;
 
     public String getOldPassword() {

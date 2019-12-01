@@ -4,6 +4,6 @@ import com.nimaaj.ecommerce.domain.NotificationLog;
 import com.nimaaj.ecommerce.dto.NotificationDTO;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { DateMapper.class })
 public interface NotificationMapper extends CommonMapper<NotificationLog, NotificationDTO> {
 }
