@@ -87,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = productMapper.toEntity(addProductModel);
         product = productRepository.save(product);
         product = addProductDetail(addProductModel, product);
-        if (CollectionUtils.isEmpty(addProductModel.getMediaIds())) {
+        if (!CollectionUtils.isEmpty(addProductModel.getMediaIds())) {
             product = productMediaService.addMediaIdsToNewProduct(product, addProductModel.getMediaIds());
         }
         return productMapper.toFullProductDto(product);

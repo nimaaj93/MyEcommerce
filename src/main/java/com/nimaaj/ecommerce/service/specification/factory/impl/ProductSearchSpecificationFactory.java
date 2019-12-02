@@ -1,7 +1,10 @@
 package com.nimaaj.ecommerce.service.specification.factory.impl;
 
+import com.nimaaj.ecommerce.domain.Manufacturer;
 import com.nimaaj.ecommerce.domain.Product;
 import com.nimaaj.ecommerce.domain.ProductCategory;
+import com.nimaaj.ecommerce.enumaration.ManufacturerStatus;
+import com.nimaaj.ecommerce.enumaration.ProductStatus;
 import com.nimaaj.ecommerce.model.input.ProductFilterModel;
 import com.nimaaj.ecommerce.service.ProductCategoryService;
 import com.nimaaj.ecommerce.service.specification.factory.SpecificationFactory;
@@ -15,6 +18,7 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +42,13 @@ public class ProductSearchSpecificationFactory
         Specification<Product> specification = (root, criteriaQuery, criteriaBuilder) -> {
 
             List<Predicate> predicateList = new ArrayList<>();
+
+            Predicate statsPredicate = criteriaBuilder.equal(root.get("status"), ProductStatus.ACTIVE);
+            predicateList.add(statsPredicate);
+
+            Predicate manufacturerStatPredicate = criteriaQuery.from(Manufacturer.class)
+                    .get("manufacturerStatus").in(Arrays.asList(ManufacturerStatus.ACTIVE));
+            predicateList.add(manufacturerStatPredicate);
 
             if (Empty.isNotEmpty(filter.getCategoryId())) {
                 final List<Long> categoryIds = productCategoryService
