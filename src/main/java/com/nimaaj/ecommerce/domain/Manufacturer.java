@@ -1,11 +1,13 @@
 package com.nimaaj.ecommerce.domain;
 
+import com.nimaaj.ecommerce.enumaration.ManufacturerStatus;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "manufacturer")
-public class Manufacturer {
+public class Manufacturer extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -14,7 +16,10 @@ public class Manufacturer {
     private Long id;
     private String titleEn;
     private String titleFa;
-
+    @Lob
+    private String details;
+    @Enumerated(EnumType.STRING)
+    private ManufacturerStatus manufacturerStatus;
     @OneToMany(mappedBy = "manufacturer")
     private List<Product> products;
 
@@ -40,6 +45,22 @@ public class Manufacturer {
 
     public void setTitleFa(String titleFa) {
         this.titleFa = titleFa;
+    }
+
+    public ManufacturerStatus getManufacturerStatus() {
+        return manufacturerStatus;
+    }
+
+    public void setManufacturerStatus(ManufacturerStatus manufacturerStatus) {
+        this.manufacturerStatus = manufacturerStatus;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     public List<Product> getProducts() {
