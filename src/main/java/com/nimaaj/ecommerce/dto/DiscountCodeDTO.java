@@ -1,29 +1,29 @@
-package com.nimaaj.ecommerce.domain;
+package com.nimaaj.ecommerce.dto;
 
 import com.nimaaj.ecommerce.enumaration.DiscountCodeState;
 import com.nimaaj.ecommerce.enumaration.DiscountCodeType;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
-@Entity
-@Table(name = "discount_code")
-public class DiscountCode extends BaseEntity {
+public class DiscountCodeDTO {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull(groups = { Update.class })
+    @Null(groups = { Create.class })
     private Long id;
+    @NotBlank(groups = { Create.class, Update.class })
     private String title;
+    @Null(groups = { Update.class })
     private String codeVal;
     private String description;
-    @Enumerated(EnumType.STRING)
+    @NotNull(groups = { Create.class, Update.class })
     private DiscountCodeType discountCodeType;
     private String discountRefVal;
     private Long maxAmount;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date expireDateTime;
-    @Enumerated(EnumType.STRING)
+    private Long expireDateTime;
+    @NotNull(groups = { Create.class })
+    @Null(groups = { Update.class })
     private DiscountCodeState state;
 
     public Long getId() {
@@ -82,11 +82,11 @@ public class DiscountCode extends BaseEntity {
         this.maxAmount = maxAmount;
     }
 
-    public Date getExpireDateTime() {
+    public Long getExpireDateTime() {
         return expireDateTime;
     }
 
-    public void setExpireDateTime(Date expireDateTime) {
+    public void setExpireDateTime(Long expireDateTime) {
         this.expireDateTime = expireDateTime;
     }
 
@@ -96,5 +96,27 @@ public class DiscountCode extends BaseEntity {
 
     public void setState(DiscountCodeState state) {
         this.state = state;
+    }
+
+    // validation groups
+    public class Create {
+    }
+
+    public class Update {
+    }
+
+    @Override
+    public String toString() {
+        return "DiscountCodeDTO{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", codeVal='" + codeVal + '\'' +
+                ", description='" + description + '\'' +
+                ", discountCodeType=" + discountCodeType +
+                ", discountRefVal='" + discountRefVal + '\'' +
+                ", maxAmount=" + maxAmount +
+                ", expireDateTime=" + expireDateTime +
+                ", state=" + state +
+                '}';
     }
 }
