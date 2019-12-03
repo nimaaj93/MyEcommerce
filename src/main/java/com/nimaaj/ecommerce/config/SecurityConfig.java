@@ -30,25 +30,21 @@ import javax.annotation.PostConstruct;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-@Import(SecurityProblemSupport.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final UserDetailsService userDetailsService;
     private final TokenProvider tokenProvider;
     private final CorsFilter corsFilter;
-    private final SecurityProblemSupport problemSupport;
 
     public SecurityConfig(AuthenticationManagerBuilder authenticationManagerBuilder,
                                  UserDetailsService userDetailsService,
                                  TokenProvider tokenProvider,
-                                 CorsFilter corsFilter,
-                                 SecurityProblemSupport problemSupport) {
+                                 CorsFilter corsFilter) {
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.userDetailsService = userDetailsService;
         this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
-        this.problemSupport = problemSupport;
     }
 
     @PostConstruct
@@ -82,6 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/i18n/**")
                 .antMatchers("/content/**")
                 .antMatchers("/swagger-ui/index.html")
+                .antMatchers("/swagger-ui**")
                 .antMatchers("/test/**");
     }
 
@@ -104,7 +101,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/user/**").permitAll()
+                //TODO temp
                 .antMatchers("/api/**").permitAll()
+                .antMatchers("/swagger**").permitAll()
+                .antMatchers("/swagger-ui").permitAll()
                 .and()
                 .apply(securityConfigurerAdapter());
 
