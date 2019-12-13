@@ -11,16 +11,22 @@ import java.util.List;
  */
 public class CustomUserDetails implements UserDetails {
 
-    private String username;
-    private String password;
-    private List<GrantedAuthority> grantedAuthorities;
-    private Long userId;
+    private final String username;
+    private final String password;
+    private final List<GrantedAuthority> grantedAuthorities;
+    private final Long userId;
+    private final Long customerId;
 
-    public CustomUserDetails(String username, String password, List<GrantedAuthority> grantedAuthorities, Long userId) {
+    public CustomUserDetails(String username,
+                             String password,
+                             List<GrantedAuthority> grantedAuthorities,
+                             Long userId,
+                             Long customerId) {
         this.username = username;
         this.password = password;
         this.grantedAuthorities = grantedAuthorities;
         this.userId = userId;
+        this.customerId = customerId;
     }
 
     @Override
@@ -60,5 +66,9 @@ public class CustomUserDetails implements UserDetails {
 
     public Long getUserId() {
         return userId;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
     }
 }

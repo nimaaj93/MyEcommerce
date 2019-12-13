@@ -58,14 +58,36 @@ public final class SecurityUtils {
         return getCurrentUserJWT().map(token -> getUserId(token).get());
     }
 
+    public static Optional<Long> getCurrentCustomerId() {
+        return getCurrentUserJWT().map(token -> getCustomerId(token).get());
+    }
+
     public static Optional<Long> getUserId(String token) {
+        try {
+            return readClaimValue(token, TokenProvider.USER_ID_KEY, Integer.class)
+                    .map(Integer::longValue);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public static Optional<Long> getCustomerId(String token) {
+        try {
+            return readClaimValue(token, TokenProvider.CUSTOMER_ID_KEY, Integer.class)
+                    .map(Integer::longValue);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public static <T> Optional<T> readClaimValue(String token, String claim, Class<T> clazz) {
         try {
             return Optional.ofNullable(
                     ApplicationContextAccessor
                             .getApplicationContext()
                             .getBean(JWTReader.class)
-                            .readClaim(token, TokenProvider.USER_ID_KEY, Integer.class)
-            ).map(Integer::longValue);
+                            .readClaim(token, claim, clazz)
+            );
         } catch (Exception e) {
             return Optional.empty();
         }

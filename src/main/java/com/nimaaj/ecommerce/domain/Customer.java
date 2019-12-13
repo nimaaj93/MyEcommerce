@@ -24,6 +24,13 @@ public class Customer extends BaseEntity {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<CustomerAddress> addresses;
 
+    public Customer() {
+    }
+
+    public Customer(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

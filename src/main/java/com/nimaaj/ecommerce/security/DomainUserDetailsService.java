@@ -60,6 +60,8 @@ public class DomainUserDetailsService implements UserDetailsService {
 
         return new CustomUserDetails(username,
                 user.getAuthentication().getPassword(),
-                grantedAuthorities, user.getId());
+                grantedAuthorities,
+                user.getId(),
+                user.getCustomer().getId());
     }
 }

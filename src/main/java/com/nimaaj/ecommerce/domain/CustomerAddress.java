@@ -1,5 +1,7 @@
 package com.nimaaj.ecommerce.domain;
 
+import com.nimaaj.ecommerce.enumaration.AddressStatus;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,12 +13,12 @@ public class CustomerAddress extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String cityFa;
-    private String cityEn;
-    private String addressFa;
-    private String addressEn;
+    private String city;
+    private String addressVal;
     private String postCode;
     private boolean defaultSelected;
+    @Enumerated(EnumType.STRING)
+    private AddressStatus addressStatus;
 
     @ManyToOne
     private Customer customer;
@@ -29,36 +31,20 @@ public class CustomerAddress extends BaseEntity {
         this.id = id;
     }
 
-    public String getCityFa() {
-        return cityFa;
+    public String getCity() {
+        return city;
     }
 
-    public void setCityFa(String cityFa) {
-        this.cityFa = cityFa;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getCityEn() {
-        return cityEn;
+    public String getAddressVal() {
+        return addressVal;
     }
 
-    public void setCityEn(String cityEn) {
-        this.cityEn = cityEn;
-    }
-
-    public String getAddressFa() {
-        return addressFa;
-    }
-
-    public void setAddressFa(String addressFa) {
-        this.addressFa = addressFa;
-    }
-
-    public String getAddressEn() {
-        return addressEn;
-    }
-
-    public void setAddressEn(String addressEn) {
-        this.addressEn = addressEn;
+    public void setAddressVal(String addressVal) {
+        this.addressVal = addressVal;
     }
 
     public String getPostCode() {
@@ -83,5 +69,13 @@ public class CustomerAddress extends BaseEntity {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public AddressStatus getAddressStatus() {
+        return addressStatus;
+    }
+
+    public void setAddressStatus(AddressStatus addressStatus) {
+        this.addressStatus = addressStatus;
     }
 }
