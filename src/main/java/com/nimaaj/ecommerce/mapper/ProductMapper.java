@@ -1,8 +1,7 @@
 package com.nimaaj.ecommerce.mapper;
 
 import com.nimaaj.ecommerce.domain.Product;
-import com.nimaaj.ecommerce.dto.FullProductDTO;
-import com.nimaaj.ecommerce.dto.ProductDTO;
+import com.nimaaj.ecommerce.dto.ProductDto;
 import com.nimaaj.ecommerce.model.input.AddProductModel;
 import com.nimaaj.ecommerce.model.input.UpdateProductModel;
 import org.mapstruct.Mapper;
@@ -18,12 +17,13 @@ import org.mapstruct.Mappings;
                 ProductMediaMapper.class,
                 ProductCategoryMapper.class,
                 ManufacturerMapper.class })
-public interface ProductMapper extends CommonMapper<Product, ProductDTO> {
+public interface ProductMapper extends CommonMapper<Product, ProductDto> {
 
+    @Override
     @Mappings({
             @Mapping(source = "productMediaRels", target = "productMediaList"),
     })
-    FullProductDTO toFullProductDto(Product product);
+    ProductDto toDto(Product entity);
 
     @Mappings({
             @Mapping(source = "manufacturerId", target = "manufacturer"),

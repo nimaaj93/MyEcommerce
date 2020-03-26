@@ -2,8 +2,7 @@ package com.nimaaj.ecommerce.service.impl;
 
 import com.nimaaj.ecommerce.domain.Product;
 import com.nimaaj.ecommerce.domain.ProductDetail;
-import com.nimaaj.ecommerce.dto.FullProductDTO;
-import com.nimaaj.ecommerce.dto.ProductDTO;
+import com.nimaaj.ecommerce.dto.ProductDto;
 import com.nimaaj.ecommerce.exception.DuplicateProductCodeException;
 import com.nimaaj.ecommerce.exception.ProductNotFoundException;
 import com.nimaaj.ecommerce.mapper.ProductMapper;
@@ -34,7 +33,7 @@ import java.util.stream.Collectors;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ProductServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     private final ProductMapper productMapper;
     private final ProductRepository productRepository;
@@ -42,25 +41,22 @@ public class ProductServiceImpl implements ProductService {
     private final ProductDetailRepository productDetailRepository;
     private final ProductMediaService productMediaService;
 
-    @SuppressWarnings("unchecked")
     public ProductServiceImpl(ProductMapper productMapper,
                               ProductRepository productRepository,
                               @Qualifier("productSearchSpecificationFactory")
-                                      SpecificationFactory productSpecificationFactory,
+                                          SpecificationFactory<Product, ProductFilterModel> productSpecificationFactory,
                               ProductDetailRepository productDetailRepository,
                               ProductMediaService productMediaService) {
         this.productMapper = productMapper;
         this.productRepository = productRepository;
-        // This is safe due to injection by qualifier
-        this.productSpecificationFactory =
-                (SpecificationFactory<Product, ProductFilterModel>)productSpecificationFactory;
+        this.productSpecificationFactory = productSpecificationFactory;
         this.productDetailRepository = productDetailRepository;
         this.productMediaService = productMediaService;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductDTO> getAllProducts() {
+    public List<ProductDto> getAllProducts() {
         LOGGER.debug("getAllProducts() called");
         return productRepository.findAll()
                 .stream().map(productMapper::toDto)
@@ -70,19 +66,20 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
-    public Page<FullProductDTO> searchProducts(
+    public Page<ProductDto> searchProducts(
             Pageable pageable, ProductFilterModel productFilterModel) {
         LOGGER.debug("searchProducts() called for pageable {} and filter {}", pageable, productFilterModel);
         Specification specification = productSpecificationFactory.getSpecification(productFilterModel);
         //TODO why this warning occurs??!!
         Page<Product> productPage = productRepository.findAll(specification, pageable);
-        return productPage.map(productMapper::toFullProductDto);
+        return productPage.map(productMapper::toDto);
     }
 
     @Override
     @Transactional
-    public FullProductDTO addProduct(AddProductModel addProductModel) {
+    public ProductDto addProduct(AddProductModel addProductModel) {
         LOGGER.debug("addProduct() called for addProductModel {}", addProductModel);
+        //TODO generate product code
         validateAddProduct(addProductModel);
         Product product = productMapper.toEntity(addProductModel);
         product = productRepository.save(product);
@@ -90,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
         if (!CollectionUtils.isEmpty(addProductModel.getMediaIds())) {
             product = productMediaService.addMediaIdsToNewProduct(product, addProductModel.getMediaIds());
         }
-        return productMapper.toFullProductDto(product);
+        return productMapper.toDto(product);
     }
 
     private void validateAddProduct(AddProductModel addProductModel) {
@@ -112,22 +109,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public FullProductDTO getProductByCode(String code) {
+    public ProductDto getProductByCode(String code) {
         LOGGER.debug("getProductByCode() called for code {}", code);
         return productRepository.findByCode(code)
-                .map(productMapper::toFullProductDto)
+                .map(productMapper::toDto)
                 .orElseThrow(ProductNotFoundException::new);
     }
 
     @Override
     @Transactional
-    public FullProductDTO updateProduct(Long id, UpdateProductModel model) {
+    public ProductDto updateProduct(Long id, UpdateProductModel model) {
         LOGGER.debug("updateProduct() called for {}", model);
         Product product = productRepository.findById(id)
                 .orElseThrow(ProductNotFoundException::new);
 
         product = productRepository.save(product);
 
-        return productMapper.toFullProductDto(product);
+        return productMapper.toDto(product);
     }
 }

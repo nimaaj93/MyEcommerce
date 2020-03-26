@@ -1,37 +1,21 @@
-package com.nimaaj.ecommerce.domain;
+package com.nimaaj.ecommerce.dto;
 
 import com.nimaaj.ecommerce.enumaration.PaymentMethod;
 import com.nimaaj.ecommerce.enumaration.PaymentProvider;
 import com.nimaaj.ecommerce.enumaration.PaymentStatus;
 
-import javax.persistence.*;
-import java.util.Date;
 
-@Entity
-@Table(name = "order_payment",
-        uniqueConstraints = @UniqueConstraint(name = "payment_requestid_uq",
-                                              columnNames = "requestId"))
-public class OrderPayment extends BaseEntity {
+public class OrderPaymentDto extends BaseEntityDto {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long amount;
-    @ManyToOne
-    private Order order;
-    @Enumerated(EnumType.STRING)
+    private Long orderId;
     private PaymentStatus status;
-    @Enumerated(EnumType.STRING)
     private PaymentMethod method;
-    @Enumerated(EnumType.STRING)
     private PaymentProvider provider;
     private String requestId;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date paymentDateTime;
-    @ManyToOne
-    private User user;
+    private Long paymentDateTime;
+    private Long userId;
 
     public Long getId() {
         return id;
@@ -47,14 +31,6 @@ public class OrderPayment extends BaseEntity {
 
     public void setAmount(Long amount) {
         this.amount = amount;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
     }
 
     public PaymentStatus getStatus() {
@@ -73,14 +49,6 @@ public class OrderPayment extends BaseEntity {
         this.method = method;
     }
 
-    public Date getPaymentDateTime() {
-        return paymentDateTime;
-    }
-
-    public void setPaymentDateTime(Date paymentDateTime) {
-        this.paymentDateTime = paymentDateTime;
-    }
-
     public PaymentProvider getProvider() {
         return provider;
     }
@@ -97,11 +65,27 @@ public class OrderPayment extends BaseEntity {
         this.requestId = requestId;
     }
 
-    public User getUser() {
-        return user;
+    public Long getPaymentDateTime() {
+        return paymentDateTime;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setPaymentDateTime(Long paymentDateTime) {
+        this.paymentDateTime = paymentDateTime;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

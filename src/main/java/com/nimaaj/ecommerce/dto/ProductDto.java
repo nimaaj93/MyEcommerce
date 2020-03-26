@@ -1,17 +1,21 @@
 package com.nimaaj.ecommerce.dto;
 
+import com.nimaaj.ecommerce.enumaration.ProductStatus;
+
 import java.util.List;
 
 /**
  * Created by K550 VX on 27.09.2019.
  */
-public class FullProductDTO {
+public class ProductDto {
 
     private Long id;
     private String code;
     private String titleEn;
     private String titleFa;
     private Long price;
+    private ProductStatus status;
+    private Integer stock;
 
     private List<ProductMediaDTO> productMediaList;
     private ProductDetailDTO detail;
@@ -55,6 +59,22 @@ public class FullProductDTO {
 
     public void setPrice(Long price) {
         this.price = price;
+    }
+
+    public ProductStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ProductStatus status) {
+        this.status = status;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 
     public List<ProductMediaDTO> getProductMediaList() {

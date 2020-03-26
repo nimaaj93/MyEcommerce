@@ -1,32 +1,17 @@
-package com.nimaaj.ecommerce.domain;
+package com.nimaaj.ecommerce.dto;
 
 import com.nimaaj.ecommerce.enumaration.SaleStatus;
 import com.nimaaj.ecommerce.enumaration.SaleType;
 
-import javax.persistence.*;
-import java.util.Date;
 
-/**
- * Created by K550 VX on 1/19/2019.
- */
-@Entity
-@Table(name = "sale")
-public class Sale extends BaseEntity {
+public class SaleDto {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Enumerated(EnumType.STRING)
     private SaleType saleType;
     private String saleRefVal;
-    @Enumerated(EnumType.STRING)
     private SaleStatus saleStatus;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startDateTime;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endDateTime;
+    private Long startDateTime;
+    private Long endDateTime;
 
     public Long getId() {
         return id;
@@ -60,19 +45,19 @@ public class Sale extends BaseEntity {
         this.saleStatus = saleStatus;
     }
 
-    public Date getStartDateTime() {
+    public Long getStartDateTime() {
         return startDateTime;
     }
 
-    public void setStartDateTime(Date startDateTime) {
+    public void setStartDateTime(Long startDateTime) {
         this.startDateTime = startDateTime;
     }
 
-    public Date getEndDateTime() {
+    public Long getEndDateTime() {
         return endDateTime;
     }
 
-    public void setEndDateTime(Date endDateTime) {
+    public void setEndDateTime(Long endDateTime) {
         this.endDateTime = endDateTime;
     }
 }

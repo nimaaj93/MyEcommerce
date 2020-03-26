@@ -17,7 +17,6 @@ public class Order extends BaseEntity {
     private String orderCode;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-
     @OneToMany(mappedBy = "order")
     private List<OrderItem> items;
     @OneToMany(mappedBy = "order")
@@ -26,6 +25,8 @@ public class Order extends BaseEntity {
     private List<OrderShipping> shippings;
     @OneToOne(mappedBy = "order")
     private Invoice invoice;
+    @ManyToOne
+    private User user;
 
     public Long getId() {
         return id;
@@ -81,5 +82,13 @@ public class Order extends BaseEntity {
 
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

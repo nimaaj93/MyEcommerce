@@ -1,6 +1,6 @@
 package com.nimaaj.ecommerce.web.rest.v1;
 
-import com.nimaaj.ecommerce.dto.FullProductDTO;
+import com.nimaaj.ecommerce.dto.ProductDto;
 import com.nimaaj.ecommerce.model.input.AddProductModel;
 import com.nimaaj.ecommerce.model.input.ProductFilterModel;
 import com.nimaaj.ecommerce.model.input.UpdateProductModel;
@@ -23,23 +23,23 @@ public class ProductResource {
     }
 
     @GetMapping
-    public ResponseEntity<Page<FullProductDTO>> getProducts(
+    public ResponseEntity<Page<ProductDto>> getProducts(
             Pageable pageable, ProductFilterModel productFilterModel) {
         return ResponseEntity.ok(productService.searchProducts(pageable, productFilterModel));
     }
 
     @PostMapping
-    public ResponseEntity<FullProductDTO> addProduct(@Valid @RequestBody AddProductModel model) {
+    public ResponseEntity<ProductDto> addProduct(@Valid @RequestBody AddProductModel model) {
         return ResponseEntity.ok(productService.addProduct(model));
     }
 
     @GetMapping("/code/{code}")
-    public ResponseEntity<FullProductDTO> productByCode(@PathVariable("code") String code) {
+    public ResponseEntity<ProductDto> productByCode(@PathVariable("code") String code) {
         return ResponseEntity.ok(productService.getProductByCode(code));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FullProductDTO> updateProduct(@PathVariable("id") Long id , @Valid @RequestBody UpdateProductModel model) {
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable("id") Long id , @Valid @RequestBody UpdateProductModel model) {
         return ResponseEntity.ok(productService.updateProduct(id, model));
     }
 

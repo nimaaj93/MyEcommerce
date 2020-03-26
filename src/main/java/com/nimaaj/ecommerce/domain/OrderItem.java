@@ -24,8 +24,6 @@ public class OrderItem extends BaseEntity {
     private Integer beforeStock;
     private Integer currentStock;
     private Integer orderCount;
-    @OneToOne
-    private Customer customer;
     @OneToMany
     private List<Sale> sales;
     @ManyToOne
@@ -70,14 +68,6 @@ public class OrderItem extends BaseEntity {
 
     public void setCurrentStock(Integer currentStock) {
         this.currentStock = currentStock;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 
     public List<Sale> getSales() {

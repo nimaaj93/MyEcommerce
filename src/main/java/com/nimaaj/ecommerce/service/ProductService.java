@@ -1,8 +1,6 @@
 package com.nimaaj.ecommerce.service;
 
-import com.nimaaj.ecommerce.domain.Product;
-import com.nimaaj.ecommerce.dto.FullProductDTO;
-import com.nimaaj.ecommerce.dto.ProductDTO;
+import com.nimaaj.ecommerce.dto.ProductDto;
 import com.nimaaj.ecommerce.model.input.AddProductModel;
 import com.nimaaj.ecommerce.model.input.ProductFilterModel;
 import com.nimaaj.ecommerce.model.input.UpdateProductModel;
@@ -16,14 +14,14 @@ import java.util.List;
  */
 public interface ProductService {
 
-    List<ProductDTO> getAllProducts();
+    List<ProductDto> getAllProducts();
 
-    Page<FullProductDTO> searchProducts(Pageable pageable, ProductFilterModel productFilterModel);
+    Page<ProductDto> searchProducts(Pageable pageable, ProductFilterModel productFilterModel);
 
-    FullProductDTO addProduct(AddProductModel addProductModel);
+    ProductDto addProduct(AddProductModel addProductModel);
 
-    FullProductDTO getProductByCode(String code);
+    ProductDto getProductByCode(String code);
 
-    FullProductDTO updateProduct(Long id, UpdateProductModel model);
+    ProductDto updateProduct(Long id, UpdateProductModel model);
 
 }
