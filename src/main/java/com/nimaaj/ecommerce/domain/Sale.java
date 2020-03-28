@@ -2,6 +2,8 @@ package com.nimaaj.ecommerce.domain;
 
 import com.nimaaj.ecommerce.enumaration.SaleStatus;
 import com.nimaaj.ecommerce.enumaration.SaleType;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,6 +13,8 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "sale")
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Sale extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -28,51 +32,4 @@ public class Sale extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDateTime;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public SaleType getSaleType() {
-        return saleType;
-    }
-
-    public void setSaleType(SaleType saleType) {
-        this.saleType = saleType;
-    }
-
-    public String getSaleRefVal() {
-        return saleRefVal;
-    }
-
-    public void setSaleRefVal(String saleRefVal) {
-        this.saleRefVal = saleRefVal;
-    }
-
-    public SaleStatus getSaleStatus() {
-        return saleStatus;
-    }
-
-    public void setSaleStatus(SaleStatus saleStatus) {
-        this.saleStatus = saleStatus;
-    }
-
-    public Date getStartDateTime() {
-        return startDateTime;
-    }
-
-    public void setStartDateTime(Date startDateTime) {
-        this.startDateTime = startDateTime;
-    }
-
-    public Date getEndDateTime() {
-        return endDateTime;
-    }
-
-    public void setEndDateTime(Date endDateTime) {
-        this.endDateTime = endDateTime;
-    }
 }

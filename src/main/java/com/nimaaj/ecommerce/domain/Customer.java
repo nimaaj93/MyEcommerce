@@ -2,12 +2,18 @@ package com.nimaaj.ecommerce.domain;
 
 import com.nimaaj.ecommerce.enumaration.CustomerType;
 import com.nimaaj.ecommerce.enumaration.Gender;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 @Table(name = "customer")
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Customer extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -15,14 +21,21 @@ public class Customer extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
+    @NotNull
     private String customerName;
+
     @Enumerated(EnumType.STRING)
+    @NotNull
     private CustomerType customerType;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<User> users;
+
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<CustomerAddress> addresses;
+
 
     public Customer() {
     }
@@ -31,43 +44,4 @@ public class Customer extends BaseEntity {
         this.id = id;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public CustomerType getCustomerType() {
-        return customerType;
-    }
-
-    public void setCustomerType(CustomerType customerType) {
-        this.customerType = customerType;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
-    public List<CustomerAddress> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(List<CustomerAddress> addresses) {
-        this.addresses = addresses;
-    }
 }

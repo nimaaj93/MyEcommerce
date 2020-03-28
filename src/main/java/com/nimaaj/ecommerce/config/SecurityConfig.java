@@ -1,13 +1,10 @@
 package com.nimaaj.ecommerce.config;
 
-import com.nimaaj.ecommerce.security.AuthoritiesConstants;
 import com.nimaaj.ecommerce.security.jwt.JWTConfigurer;
 import com.nimaaj.ecommerce.security.jwt.TokenProvider;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,12 +15,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
-import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
 import javax.annotation.PostConstruct;
 
@@ -79,6 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/content/**")
                 .antMatchers("/swagger-ui/index.html")
                 .antMatchers("/swagger-ui**")
+                .antMatchers("/swagger-ui.html")
                 .antMatchers("/test/**");
     }
 
@@ -88,10 +84,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-//                .exceptionHandling()
-//                .authenticationEntryPoint(problemSupport)
-//                .accessDeniedHandler(problemSupport)
-//                .and()
                 .headers()
                 .frameOptions()
                 .disable()
@@ -105,6 +97,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("/swagger**").permitAll()
                 .antMatchers("/swagger-ui").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
                 .and()
                 .apply(securityConfigurerAdapter());
 

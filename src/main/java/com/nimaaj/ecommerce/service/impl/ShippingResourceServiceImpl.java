@@ -28,7 +28,8 @@ public class ShippingResourceServiceImpl implements ShippingResourceService {
     private final ShippingResourceRepository shippingResourceRepository;
     private final ShippingResourceMapper shippingResourceMapper;
 
-    public ShippingResourceServiceImpl(ShippingResourceRepository shippingResourceRepository, ShippingResourceMapper shippingResourceMapper) {
+    public ShippingResourceServiceImpl(ShippingResourceRepository shippingResourceRepository,
+                                       ShippingResourceMapper shippingResourceMapper) {
         this.shippingResourceRepository = shippingResourceRepository;
         this.shippingResourceMapper = shippingResourceMapper;
     }

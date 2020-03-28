@@ -32,14 +32,13 @@ public class DiscountCodeServiceImpl implements DiscountCodeService {
     private final DiscountCodeMapper discountCodeMapper;
     private final SpecificationFactory<DiscountCode, String> specificationFactory;
 
-    @SuppressWarnings("unchecked")
     public DiscountCodeServiceImpl(DiscountCodeRepository discountCodeRepository,
                                    DiscountCodeMapper discountCodeMapper,
                                    @Qualifier("discountCodeSearchSpecificationFactory")
-                                           SpecificationFactory specificationFactory) {
+                                               SpecificationFactory<DiscountCode, String> specificationFactory) {
         this.discountCodeRepository = discountCodeRepository;
         this.discountCodeMapper = discountCodeMapper;
-        this.specificationFactory = (SpecificationFactory<DiscountCode, String>) specificationFactory;
+        this.specificationFactory = specificationFactory;
     }
 
     @Override

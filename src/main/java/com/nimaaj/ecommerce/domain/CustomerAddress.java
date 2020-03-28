@@ -1,11 +1,17 @@
 package com.nimaaj.ecommerce.domain;
 
 import com.nimaaj.ecommerce.enumaration.AddressStatus;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "customer_address")
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class CustomerAddress extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -13,69 +19,28 @@ public class CustomerAddress extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
+    @NotNull
     private String city;
+
+    @NotBlank
+    @NotNull
     private String addressVal;
+
+    @NotBlank
+    @NotNull
     private String postCode;
+
     private boolean defaultSelected;
+
     @Enumerated(EnumType.STRING)
+    @NotNull
     private AddressStatus addressStatus;
 
     @ManyToOne
+    @NotNull
     private Customer customer;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getAddressVal() {
-        return addressVal;
-    }
-
-    public void setAddressVal(String addressVal) {
-        this.addressVal = addressVal;
-    }
-
-    public String getPostCode() {
-        return postCode;
-    }
-
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
-    }
-
-    public boolean isDefaultSelected() {
-        return defaultSelected;
-    }
-
-    public void setDefaultSelected(boolean defaultSelected) {
-        this.defaultSelected = defaultSelected;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public AddressStatus getAddressStatus() {
-        return addressStatus;
-    }
-
-    public void setAddressStatus(AddressStatus addressStatus) {
-        this.addressStatus = addressStatus;
-    }
 }

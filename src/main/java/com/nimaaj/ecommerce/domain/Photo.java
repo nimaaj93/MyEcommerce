@@ -1,10 +1,15 @@
 package com.nimaaj.ecommerce.domain;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("PHOTO")
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Photo extends Media {
 
     private Long width;
@@ -12,35 +17,4 @@ public class Photo extends Media {
     private Double aspectRatio;
     private boolean blackAndWhite;
 
-    public Long getWidth() {
-        return width;
-    }
-
-    public void setWidth(Long width) {
-        this.width = width;
-    }
-
-    public Long getHeight() {
-        return height;
-    }
-
-    public void setHeight(Long height) {
-        this.height = height;
-    }
-
-    public Double getAspectRatio() {
-        return aspectRatio;
-    }
-
-    public void setAspectRatio(Double aspectRatio) {
-        this.aspectRatio = aspectRatio;
-    }
-
-    public boolean isBlackAndWhite() {
-        return blackAndWhite;
-    }
-
-    public void setBlackAndWhite(boolean blackAndWhite) {
-        this.blackAndWhite = blackAndWhite;
-    }
 }

@@ -1,22 +1,5 @@
 server:
-  port: 6666
-
-api:
-  version: 1.0
-swagger:
-  enabled: true
-  title: jpa-spec-with-quartz-and-api API
-  description: Sample Swagger implementation for the `jpa-spec-with-quartz-and-api` service, leveraging annotations at the controller-method level.
-  useDefaultResponseMessages: false
-  enableUrlTemplating: false
-  deepLinking: true
-  defaultModelsExpandDepth: 1
-  defaultModelExpandDepth: 1
-  displayOperationId: false
-  displayRequestDuration: false
-  filter: false
-  maxDisplayedTags: 0
-  showExtensions: false
+  port: 8080
 
 spring:
   application:

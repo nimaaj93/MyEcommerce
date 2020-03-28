@@ -3,6 +3,8 @@ package com.nimaaj.ecommerce.domain;
 import com.nimaaj.ecommerce.enumaration.PaymentMethod;
 import com.nimaaj.ecommerce.enumaration.PaymentProvider;
 import com.nimaaj.ecommerce.enumaration.PaymentStatus;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,6 +13,8 @@ import java.util.Date;
 @Table(name = "order_payment",
         uniqueConstraints = @UniqueConstraint(name = "payment_requestid_uq",
                                               columnNames = "requestId"))
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class OrderPayment extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -33,75 +37,4 @@ public class OrderPayment extends BaseEntity {
     @ManyToOne
     private User user;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Long amount) {
-        this.amount = amount;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public PaymentStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(PaymentStatus status) {
-        this.status = status;
-    }
-
-    public PaymentMethod getMethod() {
-        return method;
-    }
-
-    public void setMethod(PaymentMethod method) {
-        this.method = method;
-    }
-
-    public Date getPaymentDateTime() {
-        return paymentDateTime;
-    }
-
-    public void setPaymentDateTime(Date paymentDateTime) {
-        this.paymentDateTime = paymentDateTime;
-    }
-
-    public PaymentProvider getProvider() {
-        return provider;
-    }
-
-    public void setProvider(PaymentProvider provider) {
-        this.provider = provider;
-    }
-
-    public String getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

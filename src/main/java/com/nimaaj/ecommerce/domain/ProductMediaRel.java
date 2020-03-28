@@ -1,5 +1,8 @@
 package com.nimaaj.ecommerce.domain;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,6 +10,8 @@ import javax.persistence.*;
 @NamedEntityGraph(name = "ProductMediaRel.full",
         attributeNodes = {
         @NamedAttributeNode("product"), @NamedAttributeNode("media")})
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class ProductMediaRel extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -23,43 +28,5 @@ public class ProductMediaRel extends BaseEntity {
     @ManyToOne
     private Media media;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getOrderVal() {
-        return orderVal;
-    }
-
-    public void setOrderVal(Integer orderVal) {
-        this.orderVal = orderVal;
-    }
-
-    public boolean isMain() {
-        return main;
-    }
-
-    public void setMain(boolean main) {
-        this.main = main;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Media getMedia() {
-        return media;
-    }
-
-    public void setMedia(Media media) {
-        this.media = media;
-    }
 }

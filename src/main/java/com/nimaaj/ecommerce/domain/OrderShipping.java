@@ -1,12 +1,16 @@
 package com.nimaaj.ecommerce.domain;
 
 import com.nimaaj.ecommerce.enumaration.ShippingStatus;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "order_shipping")
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class OrderShipping extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -25,51 +29,4 @@ public class OrderShipping extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ShippingStatus status;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public ShippingResource getResource() {
-        return resource;
-    }
-
-    public void setResource(ShippingResource resource) {
-        this.resource = resource;
-    }
-
-    public Date getSendDateTime() {
-        return sendDateTime;
-    }
-
-    public void setSendDateTime(Date sendDateTime) {
-        this.sendDateTime = sendDateTime;
-    }
-
-    public Date getDeliverDateTime() {
-        return deliverDateTime;
-    }
-
-    public void setDeliverDateTime(Date deliverDateTime) {
-        this.deliverDateTime = deliverDateTime;
-    }
-
-    public ShippingStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(ShippingStatus status) {
-        this.status = status;
-    }
 }

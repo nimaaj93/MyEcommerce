@@ -1,9 +1,14 @@
 package com.nimaaj.ecommerce.domain;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "product_tag_rel")
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class ProductTagRel extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -16,27 +21,4 @@ public class ProductTagRel extends BaseEntity {
     @ManyToOne
     private Product product;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public ProductTag getProductTag() {
-        return productTag;
-    }
-
-    public void setProductTag(ProductTag productTag) {
-        this.productTag = productTag;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 }

@@ -1,10 +1,15 @@
 package com.nimaaj.ecommerce.domain;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "shipping_resource")
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class ShippingResource extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -17,43 +22,4 @@ public class ShippingResource extends BaseEntity {
     private Integer total;
     private Integer available;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getStartDateTime() {
-        return startDateTime;
-    }
-
-    public void setStartDateTime(Date startDateTime) {
-        this.startDateTime = startDateTime;
-    }
-
-    public Date getEndDateTime() {
-        return endDateTime;
-    }
-
-    public void setEndDateTime(Date endDateTime) {
-        this.endDateTime = endDateTime;
-    }
-
-    public Integer getTotal() {
-        return total;
-    }
-
-    public void setTotal(Integer total) {
-        this.total = total;
-    }
-
-    public Integer getAvailable() {
-        return available;
-    }
-
-    public void setAvailable(Integer available) {
-        this.available = available;
-    }
 }

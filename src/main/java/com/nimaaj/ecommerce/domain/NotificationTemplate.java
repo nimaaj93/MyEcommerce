@@ -1,9 +1,16 @@
 package com.nimaaj.ecommerce.domain;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "notification_template")
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class NotificationTemplate extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -11,30 +18,13 @@ public class NotificationTemplate extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @NotBlank
     private String templateText;
+
+    @NotNull
+    @NotBlank
     private String templateCode;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTemplateText() {
-        return templateText;
-    }
-
-    public void setTemplateText(String templateText) {
-        this.templateText = templateText;
-    }
-
-    public String getTemplateCode() {
-        return templateCode;
-    }
-
-    public void setTemplateCode(String templateCode) {
-        this.templateCode = templateCode;
-    }
 }
