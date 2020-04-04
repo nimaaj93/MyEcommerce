@@ -1,5 +1,6 @@
 package com.nimaaj.ecommerce.security;
 
+import com.nimaaj.ecommerce.enumaration.UserType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,17 +17,20 @@ public class CustomUserDetails implements UserDetails {
     private final List<GrantedAuthority> grantedAuthorities;
     private final Long userId;
     private final Long customerId;
+    private final UserType userType;
 
     public CustomUserDetails(String username,
                              String password,
                              List<GrantedAuthority> grantedAuthorities,
                              Long userId,
-                             Long customerId) {
+                             Long customerId,
+                             UserType userType) {
         this.username = username;
         this.password = password;
         this.grantedAuthorities = grantedAuthorities;
         this.userId = userId;
         this.customerId = customerId;
+        this.userType = userType;
     }
 
     @Override
@@ -70,5 +74,9 @@ public class CustomUserDetails implements UserDetails {
 
     public Long getCustomerId() {
         return customerId;
+    }
+
+    public UserType getUserType() {
+        return userType;
     }
 }

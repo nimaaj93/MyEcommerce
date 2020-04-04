@@ -42,4 +42,11 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private UserState userState;
 
+    public User() {
+    }
+
+    public User(Long id) {
+        this.id = id;
+    }
+
 }

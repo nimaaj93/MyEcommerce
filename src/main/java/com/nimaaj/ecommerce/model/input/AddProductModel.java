@@ -16,24 +16,36 @@ public class AddProductModel {
 
     @NotBlank
     private String code;
+
     @NotBlank
     private String titleEn;
+
     @NotBlank
     private String titleFa;
+
     @NotNull
     @Min(value = 0L)
     private Long price;
+
     @NotNull
     @Min(value = 0L)
     private Long manufacturerId;
+
     private Integer stock;
+
     @NotNull
     private ProductStatus status;
+
     @NotNull
     @Min(value = 0L)
     private Long categoryId;
+
     private String details;
+
     private List<Long> mediaIds;
+
     private List<Long> tagIds;
+
+    private boolean deliverable;
 
 }

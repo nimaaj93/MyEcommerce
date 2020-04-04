@@ -39,7 +39,7 @@ public class ProductSearchSpecificationFactory
     @Override
     public Specification<Product> getSpecification(ProductFilterModel filter) {
 
-        Specification<Product> specification = (root, criteriaQuery, criteriaBuilder) -> {
+        return (root, criteriaQuery, criteriaBuilder) -> {
 
             List<Predicate> predicateList = new ArrayList<>();
 
@@ -79,7 +79,5 @@ public class ProductSearchSpecificationFactory
 
             return SpecificationUtil.getFinalPredicate(criteriaBuilder, predicateList);
         };
-
-        return specification;
     }
 }

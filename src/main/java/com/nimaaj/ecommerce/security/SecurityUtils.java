@@ -80,6 +80,17 @@ public final class SecurityUtils {
         }
     }
 
+    public static boolean isAdmin(String token) {
+        return readClaimValue(token, TokenProvider.ADMIN_KEY, Boolean.class)
+                .orElseThrow(IllegalStateException::new);
+    }
+
+    public static boolean isCurrentUserAdmin() {
+        return getCurrentUserJWT()
+                .map(SecurityUtils::isAdmin)
+                .orElseThrow(IllegalStateException::new);
+    }
+
     public static <T> Optional<T> readClaimValue(String token, String claim, Class<T> clazz) {
         try {
             return Optional.ofNullable(

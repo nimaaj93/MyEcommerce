@@ -26,6 +26,7 @@ public class TokenProvider {
     public static final String AUTHORITIES_KEY = "auth";
     public static final String USER_ID_KEY = "user_id";
     public static final String CUSTOMER_ID_KEY = "customer_id";
+    public static final String ADMIN_KEY = "admin";
 
     private long tokenValidityInMilliseconds;
 
@@ -68,6 +69,7 @@ public class TokenProvider {
             .claim(AUTHORITIES_KEY, authorities)
             .claim(USER_ID_KEY, userDetails.getUserId())
             .claim(CUSTOMER_ID_KEY, userDetails.getCustomerId())
+            .claim(ADMIN_KEY, userDetails.getUserType())
             .signWith(keyProvider.getKey(), SignatureAlgorithm.HS512)
             .setExpiration(validity)
             .compact();

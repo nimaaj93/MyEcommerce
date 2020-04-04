@@ -64,4 +64,6 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductTagRel> productTagRels;
 
+    private boolean deliverable;
+
 }

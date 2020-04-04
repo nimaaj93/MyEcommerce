@@ -62,6 +62,7 @@ public class DomainUserDetailsService implements UserDetailsService {
                 user.getAuthentication().getPassword(),
                 grantedAuthorities,
                 user.getId(),
-                user.getCustomer().getId());
+                user.getCustomer().getId(),
+                user.getUserType());
     }
 }
