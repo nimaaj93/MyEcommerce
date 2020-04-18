@@ -1,6 +1,6 @@
 package com.nimaaj.ecommerce.enumaration;
 
-public enum  NotificationTemplates {
+public enum NotificationTemplates {
     OTP("otp"),
     ;
 
