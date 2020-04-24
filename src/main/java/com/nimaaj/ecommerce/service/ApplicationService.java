@@ -1,9 +1,9 @@
 package com.nimaaj.ecommerce.service;
 
-import com.nimaaj.ecommerce.dto.ApplicationDTO;
+import com.nimaaj.ecommerce.dto.ApplicationDto;
 
 public interface ApplicationService {
 
-    ApplicationDTO getApplication();
+    ApplicationDto getApplication();
 
 }

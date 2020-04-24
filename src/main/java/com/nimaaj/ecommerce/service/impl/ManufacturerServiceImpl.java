@@ -1,7 +1,7 @@
 package com.nimaaj.ecommerce.service.impl;
 
 import com.nimaaj.ecommerce.domain.Manufacturer;
-import com.nimaaj.ecommerce.dto.ManufacturerDTO;
+import com.nimaaj.ecommerce.dto.ManufacturerDto;
 import com.nimaaj.ecommerce.enumaration.ManufacturerStatus;
 import com.nimaaj.ecommerce.exception.ManufacturerNotFoundException;
 import com.nimaaj.ecommerce.mapper.ManufacturerMapper;
@@ -30,7 +30,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public ManufacturerDTO create(ManufacturerDTO manufacturerDTO) {
+    public ManufacturerDto create(ManufacturerDto manufacturerDTO) {
         LOGGER.debug("create() run for {}", manufacturerDTO);
         Manufacturer manufacturer = manufacturerMapper.toEntity(manufacturerDTO);
         manufacturer = manufacturerRepository.save(manufacturer);
@@ -38,7 +38,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public ManufacturerDTO update(ManufacturerDTO manufacturerDTO) {
+    public ManufacturerDto update(ManufacturerDto manufacturerDTO) {
         LOGGER.debug("update() run for {}", manufacturerDTO);
         manufacturerRepository.findById(manufacturerDTO.getId())
                 .filter(manufacturer1 -> manufacturer1.getManufacturerStatus() != ManufacturerStatus.DELETED)
@@ -49,7 +49,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public ManufacturerDTO updateStatus(Long id, ManufacturerStatus status) {
+    public ManufacturerDto updateStatus(Long id, ManufacturerStatus status) {
         LOGGER.debug("updateStatus() run for id {} and status {}", id, status);
         Manufacturer manufacturer = manufacturerRepository.findById(id)
                 .filter(manufacturer1 -> manufacturer1.getManufacturerStatus() != ManufacturerStatus.DELETED)
@@ -60,7 +60,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public ManufacturerDTO getById(Long id) {
+    public ManufacturerDto getById(Long id) {
         LOGGER.debug("getById() run for {}", id);
         return manufacturerRepository.findById(id)
                 .filter(manufacturer1 -> manufacturer1.getManufacturerStatus() != ManufacturerStatus.DELETED)

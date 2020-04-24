@@ -2,6 +2,7 @@ package com.nimaaj.ecommerce.config;
 
 import com.nimaaj.ecommerce.security.jwt.JWTConfigurer;
 import com.nimaaj.ecommerce.security.jwt.TokenProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,22 +26,13 @@ import javax.annotation.PostConstruct;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final UserDetailsService userDetailsService;
     private final TokenProvider tokenProvider;
     private final CorsFilter corsFilter;
-
-    public SecurityConfig(AuthenticationManagerBuilder authenticationManagerBuilder,
-                                 UserDetailsService userDetailsService,
-                                 TokenProvider tokenProvider,
-                                 CorsFilter corsFilter) {
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.userDetailsService = userDetailsService;
-        this.tokenProvider = tokenProvider;
-        this.corsFilter = corsFilter;
-    }
 
     @PostConstruct
     public void init() {
@@ -93,8 +85,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/user/**").permitAll()
-                //TODO temp
-                .antMatchers("/api/**").permitAll()
                 .antMatchers("/swagger**").permitAll()
                 .antMatchers("/swagger-ui").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()

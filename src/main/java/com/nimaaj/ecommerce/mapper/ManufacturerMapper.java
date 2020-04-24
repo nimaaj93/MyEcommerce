@@ -1,14 +1,14 @@
 package com.nimaaj.ecommerce.mapper;
 
 import com.nimaaj.ecommerce.domain.Manufacturer;
-import com.nimaaj.ecommerce.dto.ManufacturerDTO;
+import com.nimaaj.ecommerce.dto.ManufacturerDto;
 import org.mapstruct.Mapper;
 
 /**
  * Created by K550 VX on 27.10.2019.
  */
 @Mapper(componentModel = "spring")
-public interface ManufacturerMapper extends CommonMapper<Manufacturer, ManufacturerDTO> {
+public interface ManufacturerMapper extends CommonMapper<Manufacturer, ManufacturerDto> {
 
     default Manufacturer fromId(Long id) {
         if (id == null) {

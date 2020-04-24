@@ -1,15 +1,15 @@
 package com.nimaaj.ecommerce.service;
 
-import com.nimaaj.ecommerce.dto.UserDTO;
+import com.nimaaj.ecommerce.dto.UserDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface UserManagementService {
 
-    Page<UserDTO> pageUsers(Pageable pageable, String query);
+    Page<UserDto> pageUsers(Pageable pageable, String query);
 
-    UserDTO enable(Long userId);
+    UserDto enable(Long userId);
 
-    UserDTO disable(Long userId);
+    UserDto disable(Long userId);
 
 }

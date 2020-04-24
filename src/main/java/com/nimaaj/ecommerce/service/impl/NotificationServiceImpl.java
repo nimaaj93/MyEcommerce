@@ -2,8 +2,7 @@ package com.nimaaj.ecommerce.service.impl;
 
 import com.nimaaj.ecommerce.domain.NotificationLog;
 import com.nimaaj.ecommerce.domain.NotificationTemplate;
-import com.nimaaj.ecommerce.domain.User;
-import com.nimaaj.ecommerce.dto.NotificationDTO;
+import com.nimaaj.ecommerce.dto.NotificationDto;
 import com.nimaaj.ecommerce.enumaration.NotificationChannel;
 import com.nimaaj.ecommerce.exception.NotificationTemplateNotFoundException;
 import com.nimaaj.ecommerce.exception.UserNotFoundException;
@@ -21,9 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -62,7 +59,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public NotificationDTO sendTemplateNotification(TemplateNotificationRequest request) {
+    public NotificationDto sendTemplateNotification(TemplateNotificationRequest request) {
         if (request.getNotificationChannel() != NotificationChannel.SMS) {
             //TODO add support for other channels
             throw new IllegalArgumentException("Unsupported channel!");
@@ -84,7 +81,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public NotificationDTO sendCustomNotification(CustomNotificationRequest request) {
+    public NotificationDto sendCustomNotification(CustomNotificationRequest request) {
         String recipients = request.getUserIds().stream()
                 .map(userId -> userRepository.findById(userId)
                         .map(request.getChannel().getFunction())

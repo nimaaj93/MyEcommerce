@@ -3,9 +3,8 @@ package com.nimaaj.ecommerce.mapper;
 import com.nimaaj.ecommerce.domain.Media;
 import com.nimaaj.ecommerce.domain.Photo;
 import com.nimaaj.ecommerce.domain.Video;
-import com.nimaaj.ecommerce.dto.MediaDTO;
+import com.nimaaj.ecommerce.dto.MediaDto;
 import com.nimaaj.ecommerce.enumaration.MediaType;
-import com.nimaaj.ecommerce.model.input.MediaUploadModel;
 import org.mapstruct.BeforeMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -14,10 +13,10 @@ import org.mapstruct.MappingTarget;
  * Created by K550 VX on 27.09.2019.
  */
 @Mapper(componentModel = "spring")
-public interface MediaMapper extends CommonMapper<Media, MediaDTO> {
+public interface MediaMapper extends CommonMapper<Media, MediaDto> {
 
     @BeforeMapping
-    default void setMediaType(Media entity, @MappingTarget MediaDTO dto) {
+    default void setMediaType(Media entity, @MappingTarget MediaDto dto) {
         if (entity instanceof Photo) {
             dto.setMediaType(MediaType.PHOTO);
         } else if (entity instanceof Video) {

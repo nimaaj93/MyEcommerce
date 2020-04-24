@@ -1,6 +1,6 @@
 package com.nimaaj.ecommerce.service;
 
-import com.nimaaj.ecommerce.dto.UserBagDTO;
+import com.nimaaj.ecommerce.dto.UserBagDto;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface UserBagService {
 
-    List<UserBagDTO> deleteItem(Long id);
+    List<UserBagDto> deleteItem(Long id);
 
-    List<UserBagDTO> updateItem(UserBagDTO userBagDTO);
+    List<UserBagDto> updateItem(UserBagDto userBagDTO);
 
-    List<UserBagDTO> addItem(UserBagDTO userBagDTO);
+    List<UserBagDto> addItem(UserBagDto userBagDTO);
 
-    List<UserBagDTO> getUserBag();
+    List<UserBagDto> getUserBag();
 }

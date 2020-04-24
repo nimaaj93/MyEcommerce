@@ -1,8 +1,8 @@
 package com.nimaaj.ecommerce.service.impl;
 
 import com.nimaaj.ecommerce.domain.ProductCategory;
-import com.nimaaj.ecommerce.dto.ProductCategoryDTO;
-import com.nimaaj.ecommerce.dto.ProductCategoryTreeDTO;
+import com.nimaaj.ecommerce.dto.ProductCategoryDto;
+import com.nimaaj.ecommerce.dto.ProductCategoryTreeDto;
 import com.nimaaj.ecommerce.exception.ParentNotFoundException;
 import com.nimaaj.ecommerce.exception.ProductCategoryNotFoundException;
 import com.nimaaj.ecommerce.mapper.ProductCategoryMapper;
@@ -20,11 +20,9 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.OptionalInt;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by K550 VX on 3/5/2019.
@@ -79,7 +77,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     @Override
-    public List<ProductCategoryDTO> getAllProductCategories() {
+    public List<ProductCategoryDto> getAllProductCategories() {
         LOGGER.debug("getAllProductCategories() called");
         return productCategoryRepository.findAll()
                 .stream()
@@ -89,9 +87,9 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductCategoryTreeDTO> getAllProductCategoriesTree() {
+    public List<ProductCategoryTreeDto> getAllProductCategoriesTree() {
         LOGGER.debug("getAllProductCategoriesTree() called");
-        List<ProductCategoryTreeDTO> rootCategories = productCategoryRepository.findAllByParentIsNull()
+        List<ProductCategoryTreeDto> rootCategories = productCategoryRepository.findAllByParentIsNull()
                 .stream()
                 .map(productCategoryMapper::toTreeDto)
                 .map(root -> {
@@ -103,10 +101,10 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         return rootCategories;
     }
 
-    private void loadChildrenForTreeDto(ProductCategoryTreeDTO treeDTO) {
+    private void loadChildrenForTreeDto(ProductCategoryTreeDto treeDTO) {
         List<ProductCategory> children = productCategoryRepository.findAllByParent_Id(treeDTO.getId());
         if (Empty.isNotEmpty(children)) {
-            List<ProductCategoryTreeDTO> childrenTreeDtos = children.stream()
+            List<ProductCategoryTreeDto> childrenTreeDtos = children.stream()
                     .map(productCategoryMapper::toTreeDto)
                     .map(child -> {
                         loadChildrenForTreeDto(child);
@@ -118,7 +116,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     @Override
-    public ProductCategoryDTO create(@Valid AddProductCategoryModel model) {
+    public ProductCategoryDto create(@Valid AddProductCategoryModel model) {
         LOGGER.debug("create() called for {}", model);
         ProductCategory parent = null;
         if (Empty.isNotEmpty(model.getParentId())) {
@@ -135,7 +133,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     @Override
-    public ProductCategoryDTO update(@Valid UpdateProductCategoryModel model) {
+    public ProductCategoryDto update(@Valid UpdateProductCategoryModel model) {
         LOGGER.debug("update() run for {}", model);
         ProductCategory productCategory = productCategoryRepository.findById(model.getId())
                 .orElseThrow(ProductCategoryNotFoundException::new);
@@ -145,7 +143,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     @Override
-    public ProductCategoryDTO getById(@NotNull Long id) {
+    public ProductCategoryDto getById(@NotNull Long id) {
         LOGGER.debug("getById() run for {}", id);
         return productCategoryRepository.findById(id)
                 .map(productCategoryMapper::toDto)
@@ -153,7 +151,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     @Override
-    public ProductCategoryDTO reorder(Long id, Integer orderVal) {
+    public ProductCategoryDto reorder(Long id, Integer orderVal) {
         LOGGER.debug("reorder() run for id {} and orderVal {}", id, orderVal);
         ProductCategory productCategory = productCategoryRepository.findById(id)
                 .orElseThrow(ProductCategoryNotFoundException::new);

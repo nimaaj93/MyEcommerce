@@ -5,6 +5,7 @@ import com.nimaaj.ecommerce.model.input.AddProductModel;
 import com.nimaaj.ecommerce.model.input.ProductFilterModel;
 import com.nimaaj.ecommerce.model.input.UpdateProductModel;
 import com.nimaaj.ecommerce.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +15,10 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/product")
+@RequiredArgsConstructor
 public class ProductResource {
 
     private final ProductService productService;
-
-    public ProductResource(ProductService productService) {
-        this.productService = productService;
-    }
 
     @GetMapping
     public ResponseEntity<Page<ProductDto>> getProducts(

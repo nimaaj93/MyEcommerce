@@ -20,8 +20,8 @@ public class ProductDto {
     private Integer stock;
     private boolean deliverable;
 
-    private List<ProductMediaDTO> productMediaList;
-    private ProductDetailDTO detail;
-    private ProductCategoryDTO category;
+    private List<ProductMediaDto> productMediaList;
+    private ProductDetailDto detail;
+    private ProductCategoryDto category;
 
 }

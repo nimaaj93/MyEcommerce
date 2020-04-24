@@ -1,9 +1,11 @@
 package com.nimaaj.ecommerce.model.input;
 
 import com.nimaaj.ecommerce.util.validation.annotation.SecurePassword;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
+@Data
 public class UpdatePasswordModel {
 
     @NotBlank
@@ -12,19 +14,4 @@ public class UpdatePasswordModel {
     @SecurePassword
     private String newPassword;
 
-    public String getOldPassword() {
-        return oldPassword;
-    }
-
-    public void setOldPassword(String oldPassword) {
-        this.oldPassword = oldPassword;
-    }
-
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
-    }
 }

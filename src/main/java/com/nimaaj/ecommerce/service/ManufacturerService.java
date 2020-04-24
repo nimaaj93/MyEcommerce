@@ -1,16 +1,16 @@
 package com.nimaaj.ecommerce.service;
 
-import com.nimaaj.ecommerce.dto.ManufacturerDTO;
+import com.nimaaj.ecommerce.dto.ManufacturerDto;
 import com.nimaaj.ecommerce.enumaration.ManufacturerStatus;
 
 public interface ManufacturerService {
 
-    ManufacturerDTO create(ManufacturerDTO manufacturerDTO);
+    ManufacturerDto create(ManufacturerDto manufacturerDTO);
 
-    ManufacturerDTO update(ManufacturerDTO manufacturerDTO);
+    ManufacturerDto update(ManufacturerDto manufacturerDTO);
 
-    ManufacturerDTO updateStatus(Long id, ManufacturerStatus status);
+    ManufacturerDto updateStatus(Long id, ManufacturerStatus status);
 
-    ManufacturerDTO getById(Long id);
+    ManufacturerDto getById(Long id);
 
 }

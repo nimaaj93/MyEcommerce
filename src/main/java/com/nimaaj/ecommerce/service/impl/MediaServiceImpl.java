@@ -1,7 +1,7 @@
 package com.nimaaj.ecommerce.service.impl;
 
 import com.nimaaj.ecommerce.domain.*;
-import com.nimaaj.ecommerce.dto.MediaDTO;
+import com.nimaaj.ecommerce.dto.MediaDto;
 import com.nimaaj.ecommerce.enumaration.MediaStatus;
 import com.nimaaj.ecommerce.enumaration.MediaType;
 import com.nimaaj.ecommerce.exception.MediaNotFoundException;
@@ -48,9 +48,9 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public MediaDTO upload(MediaUploadModel model) {
+    public MediaDto upload(MediaUploadModel model) {
         LOGGER.debug("upload() called for {}", model);
-        MediaDTO mediaDTO;
+        MediaDto mediaDTO;
         String extension = FileUtil.getExtension(model.getMultipartFile());
         MediaType mediaType = FileUtil.getMediaTypeFromFileExtension(extension);
         if (mediaType == MediaType.PHOTO) {
@@ -62,17 +62,17 @@ public class MediaServiceImpl implements MediaService {
         return mediaDTO;
     }
 
-    private MediaDTO saveVideo(MediaUploadModel model, String extension) {
+    private MediaDto saveVideo(MediaUploadModel model, String extension) {
         Video video = new Video();
         return saveMedia(video,  model, extension);
     }
 
-    private MediaDTO savePhoto(MediaUploadModel model, String extension) {
+    private MediaDto savePhoto(MediaUploadModel model, String extension) {
         Photo photo = new Photo();
         return saveMedia(photo,  model, extension);
     }
 
-    private MediaDTO saveMedia(Media media, MediaUploadModel model, String extension) {
+    private MediaDto saveMedia(Media media, MediaUploadModel model, String extension) {
         String uuid = UUID.randomUUID().toString();
         media.setStatus(MediaStatus.STORED);
         media.setSize(model.getMultipartFile().getSize());
@@ -113,7 +113,7 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public MediaDTO getById(Long id) {
+    public MediaDto getById(Long id) {
         LOGGER.debug("getById() called for {}", id);
         return mediaRepository.findById(id)
                     .filter(media -> media.getStatus() != MediaStatus.DELETED)

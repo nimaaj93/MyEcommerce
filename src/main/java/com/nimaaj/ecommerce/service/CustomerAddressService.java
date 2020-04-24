@@ -1,20 +1,19 @@
 package com.nimaaj.ecommerce.service;
 
-import com.nimaaj.ecommerce.domain.CustomerAddress;
-import com.nimaaj.ecommerce.dto.CustomerAddressDTO;
+import com.nimaaj.ecommerce.dto.CustomerAddressDto;
 
 import java.util.List;
 
 public interface CustomerAddressService {
 
-    List<CustomerAddressDTO> getCustomerAddresses();
+    List<CustomerAddressDto> getCustomerAddresses();
 
-    CustomerAddressDTO getCustomerAddress(Long addressId);
+    CustomerAddressDto getCustomerAddress(Long addressId);
 
     void deleteCustomerAddress(Long addressId);
 
-    CustomerAddressDTO update(CustomerAddressDTO customerAddressDTO);
+    CustomerAddressDto update(CustomerAddressDto customerAddressDTO);
 
-    CustomerAddressDTO add(CustomerAddressDTO customerAddressDTO);
+    CustomerAddressDto add(CustomerAddressDto customerAddressDTO);
 
 }

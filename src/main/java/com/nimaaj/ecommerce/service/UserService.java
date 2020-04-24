@@ -1,19 +1,18 @@
 package com.nimaaj.ecommerce.service;
 
-import com.nimaaj.ecommerce.dto.ProfileDTO;
-import com.nimaaj.ecommerce.dto.UserDTO;
+import com.nimaaj.ecommerce.dto.ProfileDto;
+import com.nimaaj.ecommerce.dto.UserDto;
 import com.nimaaj.ecommerce.model.input.OtpVerification;
-import com.nimaaj.ecommerce.model.input.ResetPassModel;
 import com.nimaaj.ecommerce.model.input.UpdatePasswordModel;
 import com.nimaaj.ecommerce.model.input.UserRegistrationModel;
 
 public interface UserService {
 
-    ProfileDTO getProfile();
+    ProfileDto getProfile();
 
-    UserDTO register(UserRegistrationModel model);
+    UserDto register(UserRegistrationModel model);
 
-    UserDTO activateUser(OtpVerification otpVerification);
+    UserDto activateUser(OtpVerification otpVerification);
 
     void changePassword(UpdatePasswordModel updatePasswordModel);
 

@@ -1,7 +1,7 @@
 package com.nimaaj.ecommerce.service.impl;
 
 import com.nimaaj.ecommerce.domain.DiscountCode;
-import com.nimaaj.ecommerce.dto.DiscountCodeDTO;
+import com.nimaaj.ecommerce.dto.DiscountCodeDto;
 import com.nimaaj.ecommerce.enumaration.DiscountCodeState;
 import com.nimaaj.ecommerce.exception.DiscountCodeNotFoundException;
 import com.nimaaj.ecommerce.exception.DuplicateDiscountCodeException;
@@ -42,7 +42,7 @@ public class DiscountCodeServiceImpl implements DiscountCodeService {
     }
 
     @Override
-    public DiscountCodeDTO create(DiscountCodeDTO discountCodeDTO) {
+    public DiscountCodeDto create(DiscountCodeDto discountCodeDTO) {
         LOGGER.debug("create() called for {}", discountCodeDTO);
         Optional<DiscountCode> optionalDiscountCode =
                 discountCodeRepository.findByCodeVal(discountCodeDTO.getCodeVal());
@@ -55,7 +55,7 @@ public class DiscountCodeServiceImpl implements DiscountCodeService {
     }
 
     @Override
-    public DiscountCodeDTO update(DiscountCodeDTO discountCodeDTO) {
+    public DiscountCodeDto update(DiscountCodeDto discountCodeDTO) {
         LOGGER.debug("update() called for {}", discountCodeDTO);
         DiscountCode discountCode = discountCodeRepository.findById(discountCodeDTO.getId())
                 .orElseThrow(DiscountCodeNotFoundException::new);
@@ -65,7 +65,7 @@ public class DiscountCodeServiceImpl implements DiscountCodeService {
     }
 
     @Override
-    public DiscountCodeDTO updateState(Long id, DiscountCodeState state) {
+    public DiscountCodeDto updateState(Long id, DiscountCodeState state) {
         DiscountCode discountCode = discountCodeRepository.findById(id)
                 .orElseThrow(DiscountCodeNotFoundException::new);
         discountCode.setState(state);
@@ -74,7 +74,7 @@ public class DiscountCodeServiceImpl implements DiscountCodeService {
     }
 
     @Override
-    public Page<DiscountCodeDTO> search(Pageable pageable, String query) {
+    public Page<DiscountCodeDto> search(Pageable pageable, String query) {
         Specification<DiscountCode> specification = specificationFactory.getSpecification(query);
         return discountCodeRepository.findAll(specification, pageable).map(discountCodeMapper::toDto);
     }

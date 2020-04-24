@@ -1,18 +1,18 @@
 package com.nimaaj.ecommerce.service;
 
-import com.nimaaj.ecommerce.dto.ProductCategoryAttrDTO;
+import com.nimaaj.ecommerce.dto.ProductCategoryAttrDto;
 
 import java.util.List;
 
 public interface ProductCategoryAttrService {
 
-    ProductCategoryAttrDTO create(ProductCategoryAttrDTO productCategoryAttrDTO);
+    ProductCategoryAttrDto create(ProductCategoryAttrDto productCategoryAttrDTO);
 
-    ProductCategoryAttrDTO update(ProductCategoryAttrDTO productCategoryAttrDTO);
+    ProductCategoryAttrDto update(ProductCategoryAttrDto productCategoryAttrDTO);
 
-    List<ProductCategoryAttrDTO> getAllByProductCategoryId(Long productCategoryId);
+    List<ProductCategoryAttrDto> getAllByProductCategoryId(Long productCategoryId);
 
-    ProductCategoryAttrDTO getById(Long id);
+    ProductCategoryAttrDto getById(Long id);
 
     void delete(Long id);
 

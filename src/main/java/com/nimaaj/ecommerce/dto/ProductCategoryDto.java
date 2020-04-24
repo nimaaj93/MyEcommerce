@@ -3,7 +3,7 @@ package com.nimaaj.ecommerce.dto;
 /**
  * Created by K550 VX on 27.09.2019.
  */
-public class ProductCategoryDTO {
+public class ProductCategoryDto {
 
     private Long id;
     private String titleFa;

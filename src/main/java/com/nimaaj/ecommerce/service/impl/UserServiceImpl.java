@@ -3,14 +3,13 @@ package com.nimaaj.ecommerce.service.impl;
 import com.nimaaj.ecommerce.domain.Authentication;
 import com.nimaaj.ecommerce.domain.Authority;
 import com.nimaaj.ecommerce.domain.User;
-import com.nimaaj.ecommerce.dto.ProfileDTO;
-import com.nimaaj.ecommerce.dto.UserDTO;
+import com.nimaaj.ecommerce.dto.ProfileDto;
+import com.nimaaj.ecommerce.dto.UserDto;
 import com.nimaaj.ecommerce.enumaration.UserRole;
 import com.nimaaj.ecommerce.enumaration.UserType;
 import com.nimaaj.ecommerce.exception.*;
 import com.nimaaj.ecommerce.mapper.UserMapper;
 import com.nimaaj.ecommerce.model.input.OtpVerification;
-import com.nimaaj.ecommerce.model.input.ResetPassModel;
 import com.nimaaj.ecommerce.model.input.UpdatePasswordModel;
 import com.nimaaj.ecommerce.model.input.UserRegistrationModel;
 import com.nimaaj.ecommerce.repository.AuthenticationRepository;
@@ -18,11 +17,10 @@ import com.nimaaj.ecommerce.repository.AuthorityRepository;
 import com.nimaaj.ecommerce.repository.UserRepository;
 import com.nimaaj.ecommerce.security.AuthenticationHelper;
 import com.nimaaj.ecommerce.security.SecurityUtils;
-import com.nimaaj.ecommerce.service.AuthenticationService;
 import com.nimaaj.ecommerce.service.OtpService;
 import com.nimaaj.ecommerce.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,41 +31,30 @@ import java.util.Set;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
-
-    private final static Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
     private final AuthenticationRepository authenticationRepository;
     private final AuthorityRepository authorityRepository;
-    private final AuthenticationService authenticationService;
     private final AuthenticationHelper authenticationHelper;
     private final UserMapper userMapper;
     private final OtpService otpService;
 
-    public UserServiceImpl(UserRepository userRepository,
-                           AuthenticationRepository authenticationRepository,
-                           AuthorityRepository authorityRepository,
-                           AuthenticationService authenticationService,
-                           AuthenticationHelper authenticationHelper,
-                           UserMapper userMapper, OtpService otpService) {
-        this.userRepository = userRepository;
-        this.authenticationRepository = authenticationRepository;
-        this.authorityRepository = authorityRepository;
-        this.authenticationService = authenticationService;
-        this.authenticationHelper = authenticationHelper;
-        this.userMapper = userMapper;
-        this.otpService = otpService;
-    }
-
     @Override
-    public ProfileDTO getProfile() {
-        return null;
+    public ProfileDto getProfile() {
+        Long userId = SecurityUtils.getCurrentUserId().orElseThrow(IllegalStateException::new);
+        return userRepository.findById(userId)
+                .map(userMapper::toProfileDto)
+                .orElseThrow(IllegalStateException::new);
     }
 
     @Override
     @Transactional
-    public UserDTO register(UserRegistrationModel model) {
+    public UserDto register(UserRegistrationModel model) {
+
+        log.info("register() called for {}", model);
 
         Optional<User> optionalUser = userRepository.findOneWithAuthoritiesByMobileNumber(model.getMobileNumber());
         optionalUser.filter(User::isActivated).ifPresent(existingUser -> {
@@ -120,7 +107,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO activateUser(OtpVerification otpVerification) {
+    public UserDto activateUser(OtpVerification otpVerification) {
+        log.info("activateUser() called for {}", otpVerification);
         User user = userRepository.findOneWithAuthoritiesByMobileNumber(otpVerification.getMobileNumber())
                 .orElseThrow(UserNotFoundException::new);
         otpService.verifyOtpForUser(user, otpVerification.getVerificationCode());
@@ -131,6 +119,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePassword(UpdatePasswordModel updatePasswordModel) {
+        log.info("changePassword() called for {}", updatePasswordModel);
         Long userId = SecurityUtils.getCurrentUserId().orElseThrow(IllegalStateException::new);
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         String hashedOldPass = authenticationHelper.hashPassword(updatePasswordModel.getOldPassword(), user.getAuthentication().getSalt());

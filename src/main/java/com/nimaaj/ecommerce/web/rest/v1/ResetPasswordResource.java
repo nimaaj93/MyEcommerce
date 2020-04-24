@@ -3,6 +3,7 @@ package com.nimaaj.ecommerce.web.rest.v1;
 import com.nimaaj.ecommerce.model.ResetPasswordResult;
 import com.nimaaj.ecommerce.model.input.ResetPassModel;
 import com.nimaaj.ecommerce.service.ResetPasswordService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,13 +12,10 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/reset-password")
+@RequiredArgsConstructor
 public class ResetPasswordResource {
 
     private final ResetPasswordService resetPasswordService;
-
-    public ResetPasswordResource(ResetPasswordService resetPasswordService) {
-        this.resetPasswordService = resetPasswordService;
-    }
 
     @PostMapping
     public ResponseEntity<ResetPasswordResult> createResetPassword(@RequestParam("to") String to) {

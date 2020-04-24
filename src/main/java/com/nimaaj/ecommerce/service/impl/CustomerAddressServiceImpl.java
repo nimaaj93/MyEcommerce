@@ -2,12 +2,11 @@ package com.nimaaj.ecommerce.service.impl;
 
 import com.nimaaj.ecommerce.domain.Customer;
 import com.nimaaj.ecommerce.domain.CustomerAddress;
-import com.nimaaj.ecommerce.dto.CustomerAddressDTO;
+import com.nimaaj.ecommerce.dto.CustomerAddressDto;
 import com.nimaaj.ecommerce.enumaration.AddressStatus;
 import com.nimaaj.ecommerce.exception.CustomerAddressNotFoundException;
 import com.nimaaj.ecommerce.mapper.CustomerAddressMapper;
 import com.nimaaj.ecommerce.repository.CustomerAddressRepository;
-import com.nimaaj.ecommerce.repository.CustomerRepository;
 import com.nimaaj.ecommerce.security.SecurityUtils;
 import com.nimaaj.ecommerce.service.CustomerAddressService;
 import org.slf4j.Logger;
@@ -18,7 +17,6 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +36,7 @@ public class CustomerAddressServiceImpl implements CustomerAddressService {
     }
 
     @Override
-    public List<CustomerAddressDTO> getCustomerAddresses() {
+    public List<CustomerAddressDto> getCustomerAddresses() {
         LOGGER.debug("getCustomerAddresses() called");
         Long customerId = SecurityUtils.getCurrentCustomerId().orElseThrow(() ->
              new IllegalStateException("No customerId found in user token!")
@@ -51,7 +49,7 @@ public class CustomerAddressServiceImpl implements CustomerAddressService {
     }
 
     @Override
-    public CustomerAddressDTO getCustomerAddress(Long addressId) {
+    public CustomerAddressDto getCustomerAddress(Long addressId) {
         LOGGER.debug("getCustomerAddress() called for {}", addressId);
         Long customerId = SecurityUtils.getCurrentCustomerId().orElseThrow(() ->
                 new IllegalStateException("No customerId found in user token!")
@@ -77,7 +75,7 @@ public class CustomerAddressServiceImpl implements CustomerAddressService {
     }
 
     @Override
-    public CustomerAddressDTO update(CustomerAddressDTO customerAddressDTO) {
+    public CustomerAddressDto update(CustomerAddressDto customerAddressDTO) {
         LOGGER.debug("update() called for {}", customerAddressDTO);
         Long addressId = customerAddressDTO.getId();
         Long customerId = SecurityUtils.getCurrentCustomerId().orElseThrow(() ->
@@ -93,7 +91,7 @@ public class CustomerAddressServiceImpl implements CustomerAddressService {
     }
 
     @Override
-    public CustomerAddressDTO add(CustomerAddressDTO customerAddressDTO) {
+    public CustomerAddressDto add(CustomerAddressDto customerAddressDTO) {
         LOGGER.debug("add() called for {}", customerAddressDTO);
         Long customerId = SecurityUtils.getCurrentCustomerId().orElseThrow(() ->
                 new IllegalStateException("No customerId found in user token!")

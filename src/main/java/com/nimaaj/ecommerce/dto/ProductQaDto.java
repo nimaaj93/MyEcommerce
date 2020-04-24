@@ -10,8 +10,8 @@ public class ProductQaDto extends BaseEntityDto {
     private Long id;
     private String question;
     private String answer;
-    private UserDTO askUser;
-    private UserDTO replyUser;
+    private UserDto askUser;
+    private UserDto replyUser;
     private Long replyDateTime;
     private Long productId;
 

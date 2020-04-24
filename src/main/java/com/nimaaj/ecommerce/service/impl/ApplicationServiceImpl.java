@@ -1,7 +1,7 @@
 package com.nimaaj.ecommerce.service.impl;
 
 import com.nimaaj.ecommerce.domain.Application;
-import com.nimaaj.ecommerce.dto.ApplicationDTO;
+import com.nimaaj.ecommerce.dto.ApplicationDto;
 import com.nimaaj.ecommerce.mapper.ApplicationMapper;
 import com.nimaaj.ecommerce.repository.ApplicationRepository;
 import com.nimaaj.ecommerce.service.ApplicationService;
@@ -23,7 +23,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ApplicationDTO getApplication() {
+    public ApplicationDto getApplication() {
         LOGGER.debug("getApplication() called");
         Application application = applicationRepository.findAll()
                 .stream()

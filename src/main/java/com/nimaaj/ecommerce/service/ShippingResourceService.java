@@ -1,21 +1,21 @@
 package com.nimaaj.ecommerce.service;
 
-import com.nimaaj.ecommerce.dto.ShippingResourceDTO;
+import com.nimaaj.ecommerce.dto.ShippingResourceDto;
 
 import java.util.List;
 
 public interface ShippingResourceService {
 
-    ShippingResourceDTO getById(Long id);
+    ShippingResourceDto getById(Long id);
 
-    ShippingResourceDTO update(ShippingResourceDTO shippingResourceDTO);
+    ShippingResourceDto update(ShippingResourceDto shippingResourceDTO);
 
-    ShippingResourceDTO updateAvailable(Long id, Integer available);
+    ShippingResourceDto updateAvailable(Long id, Integer available);
 
-    ShippingResourceDTO updateTotal(Long id, Integer total);
+    ShippingResourceDto updateTotal(Long id, Integer total);
 
-    List<ShippingResourceDTO> get(Long fromDate, Long toDate);
+    List<ShippingResourceDto> get(Long fromDate, Long toDate);
 
-    ShippingResourceDTO add(ShippingResourceDTO shippingResourceDTO);
+    ShippingResourceDto add(ShippingResourceDto shippingResourceDTO);
 
 }

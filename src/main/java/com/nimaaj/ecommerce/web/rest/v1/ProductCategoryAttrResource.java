@@ -1,7 +1,8 @@
 package com.nimaaj.ecommerce.web.rest.v1;
 
-import com.nimaaj.ecommerce.dto.ProductCategoryAttrDTO;
+import com.nimaaj.ecommerce.dto.ProductCategoryAttrDto;
 import com.nimaaj.ecommerce.service.ProductCategoryAttrService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -12,40 +13,37 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/product-category/{categoryId}/attr")
 @Validated
+@RequiredArgsConstructor
 public class ProductCategoryAttrResource {
 
     private final ProductCategoryAttrService productCategoryAttrService;
 
-    public ProductCategoryAttrResource(ProductCategoryAttrService productCategoryAttrService) {
-        this.productCategoryAttrService = productCategoryAttrService;
-    }
-
     @GetMapping("/{id}")
-    public ResponseEntity<ProductCategoryAttrDTO> getById(
+    public ResponseEntity<ProductCategoryAttrDto> getById(
             @PathVariable("categoryId") Long categoryId,
             @PathVariable("id") Long id) {
         return ResponseEntity.ok(productCategoryAttrService.getById(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductCategoryAttrDTO>> getAllByCategoryId(
+    public ResponseEntity<List<ProductCategoryAttrDto>> getAllByCategoryId(
             @PathVariable("categoryId") Long categoryId) {
         return ResponseEntity.ok(productCategoryAttrService.getAllByProductCategoryId(categoryId));
     }
 
     @PostMapping
-    public ResponseEntity<ProductCategoryAttrDTO> create(
+    public ResponseEntity<ProductCategoryAttrDto> create(
             @PathVariable("categoryId") Long categoryId,
-            @Validated(ProductCategoryAttrDTO.Create.class)
-            @RequestBody ProductCategoryAttrDTO productCategoryAttrDTO) {
+            @Validated(ProductCategoryAttrDto.Create.class)
+            @RequestBody ProductCategoryAttrDto productCategoryAttrDTO) {
         return ResponseEntity.ok(productCategoryAttrService.create(productCategoryAttrDTO));
     }
 
     @PutMapping
-    public ResponseEntity<ProductCategoryAttrDTO> update(
+    public ResponseEntity<ProductCategoryAttrDto> update(
             @PathVariable("categoryId") Long categoryId,
-            @Validated(ProductCategoryAttrDTO.Update.class)
-            @RequestBody ProductCategoryAttrDTO productCategoryAttrDTO) {
+            @Validated(ProductCategoryAttrDto.Update.class)
+            @RequestBody ProductCategoryAttrDto productCategoryAttrDTO) {
         return ResponseEntity.ok(productCategoryAttrService.update(productCategoryAttrDTO));
     }
 

@@ -10,11 +10,22 @@ import java.util.List;
 
 @Entity
 @Table(name = "product")
-@NamedEntityGraph(name = "Product.gridview",
-        attributeNodes = {
-        @NamedAttributeNode(value = "productMediaRels",
-                subgraph = "ProductMediaRel.full"),
-        @NamedAttributeNode(value = "detail")})
+@NamedEntityGraphs({
+        @NamedEntityGraph(name = "Product.gridview",
+                attributeNodes = {
+                        @NamedAttributeNode(value = "productMediaRels",
+                                subgraph = "ProductMediaRel.full"),
+                        @NamedAttributeNode(value = "detail")}),
+        @NamedEntityGraph(name = "Product.full",
+                attributeNodes = {
+                        @NamedAttributeNode(value = "productMediaRels",
+                                subgraph = "ProductMediaRel.full"),
+                        @NamedAttributeNode(value = "detail"),
+                        @NamedAttributeNode(value = "productTagRels"),
+                        @NamedAttributeNode(value = "detail"),
+                        @NamedAttributeNode(value = "productQuantityDivisions"),
+                })
+})
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Product extends BaseEntity {
@@ -65,5 +76,8 @@ public class Product extends BaseEntity {
     private List<ProductTagRel> productTagRels;
 
     private boolean deliverable;
+
+    @OneToMany(mappedBy = "product")
+    private List<ProductQuantityDivision> productQuantityDivisions;
 
 }

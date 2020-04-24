@@ -1,7 +1,7 @@
 package com.nimaaj.ecommerce.service.impl;
 
 import com.nimaaj.ecommerce.domain.User;
-import com.nimaaj.ecommerce.dto.UserDTO;
+import com.nimaaj.ecommerce.dto.UserDto;
 import com.nimaaj.ecommerce.enumaration.UserState;
 import com.nimaaj.ecommerce.exception.UserNotFoundException;
 import com.nimaaj.ecommerce.mapper.UserMapper;
@@ -39,14 +39,14 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
-    public Page<UserDTO> pageUsers(Pageable pageable, String query) {
+    public Page<UserDto> pageUsers(Pageable pageable, String query) {
         LOGGER.debug("pageUsers run for pageable {} and query {}", pageable, query);
         Specification<User> specification = userSpecificationFactory.getSpecification(query);
         return userRepository.findAll(specification, pageable).map(userMapper::toDto);
     }
 
     @Override
-    public UserDTO enable(Long userId) {
+    public UserDto enable(Long userId) {
         LOGGER.debug("enable run for {}", userId);
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
@@ -56,7 +56,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
-    public UserDTO disable(Long userId) {
+    public UserDto disable(Long userId) {
         LOGGER.debug("disable run for {}", userId);
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);

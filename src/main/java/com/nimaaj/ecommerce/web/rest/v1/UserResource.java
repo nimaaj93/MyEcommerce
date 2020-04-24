@@ -1,8 +1,8 @@
 package com.nimaaj.ecommerce.web.rest.v1;
 
 import com.nimaaj.ecommerce.domain.User;
-import com.nimaaj.ecommerce.dto.ProfileDTO;
-import com.nimaaj.ecommerce.dto.UserDTO;
+import com.nimaaj.ecommerce.dto.ProfileDto;
+import com.nimaaj.ecommerce.dto.UserDto;
 import com.nimaaj.ecommerce.model.JWTToken;
 import com.nimaaj.ecommerce.model.input.AuthenticateModel;
 import com.nimaaj.ecommerce.model.input.OtpVerification;
@@ -13,6 +13,7 @@ import com.nimaaj.ecommerce.security.AuthenticationHelper;
 import com.nimaaj.ecommerce.security.jwt.JWTFilter;
 import com.nimaaj.ecommerce.security.jwt.TokenProvider;
 import com.nimaaj.ecommerce.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/user")
+@RequiredArgsConstructor
 public class UserResource {
 
     private final UserService userService;
@@ -35,20 +37,8 @@ public class UserResource {
     private final UserRepository userRepository;
     private final AuthenticationHelper authenticationHelper;
 
-    public UserResource(UserService userService,
-                        TokenProvider tokenProvider,
-                        AuthenticationManager authenticationManager,
-                        UserRepository userRepository,
-                        AuthenticationHelper authenticationHelper) {
-        this.userService = userService;
-        this.tokenProvider = tokenProvider;
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.authenticationHelper = authenticationHelper;
-    }
-
     @GetMapping("/profile")
-    public ResponseEntity<ProfileDTO> getProfile() {
+    public ResponseEntity<ProfileDto> getProfile() {
         return ResponseEntity.ok(userService.getProfile());
     }
 
@@ -79,7 +69,7 @@ public class UserResource {
 
     @PostMapping("/activate")
     public ResponseEntity<JWTToken> activateUser(@Valid @RequestBody OtpVerification otpVerification) {
-        UserDTO userDTO = userService.activateUser(otpVerification);
+        UserDto userDTO = userService.activateUser(otpVerification);
         //TODO add otp auth provider and move token issuing from resource
         return null;
     }

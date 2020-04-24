@@ -1,6 +1,6 @@
 package com.nimaaj.ecommerce.service.impl;
 
-import com.nimaaj.ecommerce.dto.UserBagDTO;
+import com.nimaaj.ecommerce.dto.UserBagDto;
 import com.nimaaj.ecommerce.exception.DuplicateUserBagException;
 import com.nimaaj.ecommerce.exception.UserBagNotFoundException;
 import com.nimaaj.ecommerce.mapper.UserBagMapper;
@@ -34,7 +34,7 @@ public class UserBagServiceImpl implements UserBagService {
     }
 
     @Override
-    public List<UserBagDTO> deleteItem(Long id) {
+    public List<UserBagDto> deleteItem(Long id) {
         log.debug("deleteItem() called for id: {}", id);
         Long userId = SecurityUtils.getCurrentUserId()
                 .orElseThrow(() -> new IllegalStateException("No logged in user found in security context!"));
@@ -48,7 +48,7 @@ public class UserBagServiceImpl implements UserBagService {
     }
 
     @Override
-    public List<UserBagDTO> updateItem(UserBagDTO userBagDTO) {
+    public List<UserBagDto> updateItem(UserBagDto userBagDTO) {
         log.debug("updateItem() called for {}", userBagDTO);
         Long userId = SecurityUtils.getCurrentUserId()
                 .orElseThrow(() -> new IllegalStateException("No logged in user found in security context!"));
@@ -62,7 +62,7 @@ public class UserBagServiceImpl implements UserBagService {
     }
 
     @Override
-    public List<UserBagDTO> addItem(UserBagDTO userBagDTO) {
+    public List<UserBagDto> addItem(UserBagDto userBagDTO) {
         log.debug("addItem() called for {}", userBagDTO);
 
         Long userId = SecurityUtils.getCurrentUserId()
@@ -79,7 +79,7 @@ public class UserBagServiceImpl implements UserBagService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserBagDTO> getUserBag() {
+    public List<UserBagDto> getUserBag() {
         log.debug("getUserBag() called");
         Long userId = SecurityUtils.getCurrentUserId()
                 .orElseThrow(() -> new IllegalStateException("No logged in user found in security context!"));

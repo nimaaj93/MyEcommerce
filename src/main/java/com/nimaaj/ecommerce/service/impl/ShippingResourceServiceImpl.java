@@ -1,7 +1,7 @@
 package com.nimaaj.ecommerce.service.impl;
 
 import com.nimaaj.ecommerce.domain.ShippingResource;
-import com.nimaaj.ecommerce.dto.ShippingResourceDTO;
+import com.nimaaj.ecommerce.dto.ShippingResourceDto;
 import com.nimaaj.ecommerce.exception.InvalidInputDataException;
 import com.nimaaj.ecommerce.exception.ShippingResourceNotFoundException;
 import com.nimaaj.ecommerce.mapper.ShippingResourceMapper;
@@ -35,7 +35,7 @@ public class ShippingResourceServiceImpl implements ShippingResourceService {
     }
 
     @Override
-    public ShippingResourceDTO getById(Long id) {
+    public ShippingResourceDto getById(Long id) {
         LOGGER.debug("getById() called for {}", id);
         return shippingResourceRepository.findById(id)
                 .map(shippingResourceMapper::toDto)
@@ -43,7 +43,7 @@ public class ShippingResourceServiceImpl implements ShippingResourceService {
     }
 
     @Override
-    public ShippingResourceDTO update(ShippingResourceDTO shippingResourceDTO) {
+    public ShippingResourceDto update(ShippingResourceDto shippingResourceDTO) {
         LOGGER.debug("update() called for {}", shippingResourceDTO);
         if (shippingResourceDTO.getAvailable() > shippingResourceDTO.getTotal()) {
             throw new InvalidInputDataException();
@@ -56,7 +56,7 @@ public class ShippingResourceServiceImpl implements ShippingResourceService {
     }
 
     @Override
-    public ShippingResourceDTO updateAvailable(Long id, @PositiveOrZero Integer available) {
+    public ShippingResourceDto updateAvailable(Long id, @PositiveOrZero Integer available) {
         LOGGER.debug("updateAvailable() called for id {} and available {}", id, available);
         ShippingResource shippingResource = shippingResourceRepository.findById(id)
                 .orElseThrow(ShippingResourceNotFoundException::new);
@@ -69,7 +69,7 @@ public class ShippingResourceServiceImpl implements ShippingResourceService {
     }
 
     @Override
-    public ShippingResourceDTO updateTotal(Long id, @PositiveOrZero Integer total) {
+    public ShippingResourceDto updateTotal(Long id, @PositiveOrZero Integer total) {
         LOGGER.debug("updateTotal() called for id {} and total {}", id, total);
         ShippingResource shippingResource = shippingResourceRepository.findById(id)
                 .orElseThrow(ShippingResourceNotFoundException::new);
@@ -82,7 +82,7 @@ public class ShippingResourceServiceImpl implements ShippingResourceService {
     }
 
     @Override
-    public List<ShippingResourceDTO> get(Long fromDate, Long toDate) {
+    public List<ShippingResourceDto> get(Long fromDate, Long toDate) {
         LOGGER.debug("get() called for fromDate {} and toDate {}", fromDate, toDate);
         if (fromDate >= toDate) {
             throw new InvalidInputDataException();
@@ -95,7 +95,7 @@ public class ShippingResourceServiceImpl implements ShippingResourceService {
     }
 
     @Override
-    public ShippingResourceDTO add(ShippingResourceDTO shippingResourceDTO) {
+    public ShippingResourceDto add(ShippingResourceDto shippingResourceDTO) {
         LOGGER.debug("add() called for {}", shippingResourceDTO);
         if (shippingResourceDTO.getAvailable() > shippingResourceDTO.getTotal()) {
             throw new InvalidInputDataException();

@@ -1,8 +1,7 @@
 package com.nimaaj.ecommerce.service;
 
-import com.nimaaj.ecommerce.domain.ProductCategory;
-import com.nimaaj.ecommerce.dto.ProductCategoryDTO;
-import com.nimaaj.ecommerce.dto.ProductCategoryTreeDTO;
+import com.nimaaj.ecommerce.dto.ProductCategoryDto;
+import com.nimaaj.ecommerce.dto.ProductCategoryTreeDto;
 import com.nimaaj.ecommerce.model.input.AddProductCategoryModel;
 import com.nimaaj.ecommerce.model.input.UpdateProductCategoryModel;
 
@@ -15,16 +14,16 @@ public interface ProductCategoryService {
 
     List<Long> getInclusiveChildrenCategoryIdsForProductCategory(Long productCategoryId);
 
-    List<ProductCategoryDTO> getAllProductCategories();
+    List<ProductCategoryDto> getAllProductCategories();
 
-    List<ProductCategoryTreeDTO> getAllProductCategoriesTree();
+    List<ProductCategoryTreeDto> getAllProductCategoriesTree();
 
-    ProductCategoryDTO create(AddProductCategoryModel model);
+    ProductCategoryDto create(AddProductCategoryModel model);
 
-    ProductCategoryDTO update(UpdateProductCategoryModel model);
+    ProductCategoryDto update(UpdateProductCategoryModel model);
 
-    ProductCategoryDTO getById(Long id);
+    ProductCategoryDto getById(Long id);
 
-    ProductCategoryDTO reorder(Long id, Integer orderVal);
+    ProductCategoryDto reorder(Long id, Integer orderVal);
 
 }

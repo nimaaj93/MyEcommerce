@@ -1,7 +1,7 @@
 package com.nimaaj.ecommerce.service.impl;
 
 import com.nimaaj.ecommerce.domain.ProductCategoryAttr;
-import com.nimaaj.ecommerce.dto.ProductCategoryAttrDTO;
+import com.nimaaj.ecommerce.dto.ProductCategoryAttrDto;
 import com.nimaaj.ecommerce.exception.ProductCategoryAttrNotFoundException;
 import com.nimaaj.ecommerce.exception.ProductCategoryNotFoundException;
 import com.nimaaj.ecommerce.mapper.ProductCategoryAttrMapper;
@@ -37,7 +37,7 @@ public class ProductCategoryAttrServiceImpl implements ProductCategoryAttrServic
     }
 
     @Override
-    public ProductCategoryAttrDTO create(ProductCategoryAttrDTO productCategoryAttrDTO) {
+    public ProductCategoryAttrDto create(ProductCategoryAttrDto productCategoryAttrDTO) {
         LOGGER.debug("create() called for {}", productCategoryAttrDTO);
         productCategoryRepository.findById(productCategoryAttrDTO.getProductCategoryId())
                 .orElseThrow(ProductCategoryNotFoundException::new);
@@ -46,7 +46,7 @@ public class ProductCategoryAttrServiceImpl implements ProductCategoryAttrServic
     }
 
     @Override
-    public ProductCategoryAttrDTO update(ProductCategoryAttrDTO productCategoryAttrDTO) {
+    public ProductCategoryAttrDto update(ProductCategoryAttrDto productCategoryAttrDTO) {
         LOGGER.debug("update() called for {}", productCategoryAttrDTO);
         productCategoryRepository.findById(productCategoryAttrDTO.getProductCategoryId())
                 .orElseThrow(ProductCategoryNotFoundException::new);
@@ -58,7 +58,7 @@ public class ProductCategoryAttrServiceImpl implements ProductCategoryAttrServic
     }
 
     @Override
-    public List<ProductCategoryAttrDTO> getAllByProductCategoryId(Long productCategoryId) {
+    public List<ProductCategoryAttrDto> getAllByProductCategoryId(Long productCategoryId) {
         LOGGER.debug("getAllByProductCategoryId() called for {}", productCategoryId);
         productCategoryRepository.findById(productCategoryId)
                 .orElseThrow(ProductCategoryNotFoundException::new);
@@ -69,7 +69,7 @@ public class ProductCategoryAttrServiceImpl implements ProductCategoryAttrServic
     }
 
     @Override
-    public ProductCategoryAttrDTO getById(Long id) {
+    public ProductCategoryAttrDto getById(Long id) {
         LOGGER.debug("getById() called for {}", id);
         return productCategoryAttrRepository.findById(id)
                 .map(productCategoryAttrMapper::toDto)

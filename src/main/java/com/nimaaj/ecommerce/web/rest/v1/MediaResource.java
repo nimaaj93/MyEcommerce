@@ -1,9 +1,10 @@
 package com.nimaaj.ecommerce.web.rest.v1;
 
-import com.nimaaj.ecommerce.dto.MediaDTO;
+import com.nimaaj.ecommerce.dto.MediaDto;
 import com.nimaaj.ecommerce.exception.FileNotFoundException;
 import com.nimaaj.ecommerce.model.input.MediaUploadModel;
 import com.nimaaj.ecommerce.service.MediaService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
@@ -17,21 +18,18 @@ import java.nio.charset.Charset;
 
 @RestController
 @RequestMapping("/api/v1/media")
+@RequiredArgsConstructor
 public class MediaResource {
 
     private final MediaService mediaService;
 
-    public MediaResource(MediaService mediaService) {
-        this.mediaService = mediaService;
-    }
-
     @PostMapping
-    public ResponseEntity<MediaDTO> upload(@Valid @RequestBody MediaUploadModel model) {
+    public ResponseEntity<MediaDto> upload(@Valid @RequestBody MediaUploadModel model) {
         return ResponseEntity.ok(mediaService.upload(model));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MediaDTO> getMedia(@PathVariable("id") Long id) {
+    public ResponseEntity<MediaDto> getMedia(@PathVariable("id") Long id) {
         return ResponseEntity.ok(mediaService.getById(id));
     }
 
