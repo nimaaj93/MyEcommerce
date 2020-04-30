@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by K550 VX on 3/3/2019.
@@ -23,5 +24,7 @@ public interface ProductService {
     ProductDto getProductByCode(String code);
 
     ProductDto updateProduct(Long id, UpdateProductModel model);
+
+    List<ProductDto> getProductsByIds(Set<Long> ids);
 
 }

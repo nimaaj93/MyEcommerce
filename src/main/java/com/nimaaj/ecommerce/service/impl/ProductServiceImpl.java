@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -149,5 +150,11 @@ public class ProductServiceImpl implements ProductService {
         product = productRepository.save(product);
 
         return productMapper.toDto(product);
+    }
+
+    @Override
+    public List<ProductDto> getProductsByIds(Set<Long> ids) {
+        log.debug("getProductsByIds() called for {}", ids);
+        return productMapper.toDto(productRepository.findAllByIdIn(ids));
     }
 }

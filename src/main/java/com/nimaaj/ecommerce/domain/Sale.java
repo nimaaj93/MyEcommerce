@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -22,13 +24,22 @@ public class Sale extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
+    @NotNull
+    private String description;
+
     @Enumerated(EnumType.STRING)
     private SaleType saleType;
+
     private String saleRefVal;
+
     @Enumerated(EnumType.STRING)
     private SaleStatus saleStatus;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDateTime;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDateTime;
 
